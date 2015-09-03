@@ -18,6 +18,6 @@ function myTimer() {
     buyBuilding('Forge');
   }
 
-  //clearInterval(myVar);
+  clearInterval(myVar);
 }
 
