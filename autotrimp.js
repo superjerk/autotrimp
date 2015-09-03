@@ -8,8 +8,8 @@ function myTimer() {
   var wood = game.resources.wood.owned / game.resources.wood.max;
   var metal = game.resources.metal.owned / game.resources.metal.max;
 
-  if (food > .8) {
-    buyBuilding('Barn');
+  if (food < .8) {
+    buyBuilding('Nursery');
   }
   if (wood > .8) {
     buyBuilding('Shed');
