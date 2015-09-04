@@ -18,6 +18,11 @@ function myTimer() {
     buyBuilding('Forge');
   }
 
+  if (game.upgrades.Coordination.allowed > game.upgrades.Coordination.done) {
+    if ((game.resources.trimps.realMax() < (game.resources.trimps.maxSoldiers * 3))) {
+      buyUpgrade('Coordination');
+    }
+  }
   //clearInterval(myVar);
 }
 
