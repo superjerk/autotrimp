@@ -19,7 +19,7 @@ function myTimer() {
   }
 
   if (game.upgrades.Coordination.allowed > game.upgrades.Coordination.done) {
-    if ((game.resources.trimps.realMax() < (game.resources.trimps.maxSoldiers * 3))) {
+    if ((game.resources.trimps.realMax() > (game.resources.trimps.maxSoldiers * 3))) {
       buyUpgrade('Coordination');
     }
   }
