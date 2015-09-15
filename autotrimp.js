@@ -21,7 +21,7 @@ function myTimer() {
   }
 
 //Buy speed upgrades
-autotrimpupgrades = ["Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
+autotrimpupgrades = ["Egg", "UberHut", "UberHouse", "UberMansion", "UberHotel", "UberResort", "Bounty", "Efficiency", "TrainTacular", "Gymystic", "Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
 for (var key in game.upgrades) {
   if (autotrimpupgrades.indexOf(key) != -1) { 
     if (game.upgrades[key].allowed > game.upgrades[key].done) {
