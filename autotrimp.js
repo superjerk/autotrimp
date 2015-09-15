@@ -1,6 +1,8 @@
-document.getElementById("food").appendChild(document.createTextNode("*"));
-document.getElementById("wood").appendChild(document.createTextNode("*"));
-document.getElementById("metal").appendChild(document.createTextNode("*"));
+//Old load notification
+//document.getElementById("food").appendChild(document.createTextNode("*"));
+//document.getElementById("wood").appendChild(document.createTextNode("*"));
+//document.getElementById("metal").appendChild(document.createTextNode("*"));
+
 //setup talk button
 document.getElementById("buildingsQueue").innerHTML = "<div style='width: 75%; float: left;'><span style='display: block;' id='noQueue'>Nothing in queue...</span><div id='queueItemsHere'></div></div><div style='color: rgb(255, 255, 255); font-size: 1.2em; text-align: center; padding-left: 22px; padding-top: 2px; padding-right: 0px;' class='col-xs-3'><div id='buildingsCollectBtn' class='workBtn pointer noselect' onClick='talk()' style='background: rgb(0, 0, 0) none repeat scroll 0% 0%;'>Talk</div></div>"
 
