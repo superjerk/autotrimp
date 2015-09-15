@@ -11,6 +11,8 @@ document.getElementById("buildingsQueue").innerHTML = "<div style='width: 75%; f
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 
+
+//only functions below here
 function talk() {
   alert("talk");
 }
