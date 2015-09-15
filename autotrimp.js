@@ -21,19 +21,14 @@ function myTimer() {
   }
 
 //Buy speed upgrades
-
-  if (game.upgrades.Speedfarming.allowed > game.upgrades.Speedfarming.done) {
-     buyUpgrade('Speedfarming');
+autotrimpupgrades = ["Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
+for (var key in game.upgrades) {
+  if (autotrimpupgrades.indexOf(key) != -1) { 
+    if (game.upgrades[key].allowed > game.upgrades[key].done) {
+      buyUpgrade(key)
+    }
   }
-  if (game.upgrades.Speedlumber.allowed > game.upgrades.Speedlumber.done) {
-     buyUpgrade('Speedlumber');
-  }
-  if (game.upgrades.Speedminer.allowed > game.upgrades.Speedminer.done) {
-     buyUpgrade('Speedminer');
-  }
-  if (game.upgrades.Speedscience.allowed > game.upgrades.Speedscience.done) {
-   buyUpgrade('Speedscience');
-  }
+}
 
 //Buy coordination
 
