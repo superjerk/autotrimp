@@ -25,7 +25,7 @@ autotrimpupgrades = ["Speedfarming", "Speedlumber", "Speedminer", "Speedscience"
 for (var key in game.upgrades) {
   if (autotrimpupgrades.indexOf(key) != -1) { 
     if (game.upgrades[key].allowed > game.upgrades[key].done) {
-      buyUpgrade(key)
+      buyUpgrade(key);
     }
   }
 }
