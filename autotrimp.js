@@ -1,7 +1,5 @@
 //Old load notification
 //document.getElementById("food").appendChild(document.createTextNode("*"));
-//document.getElementById("wood").appendChild(document.createTextNode("*"));
-//document.getElementById("metal").appendChild(document.createTextNode("*"));
 
 //fix paddings for id=buyCol and id=rightCol to .3%
 document.getElementById("buyCol").style.paddingRight = ".3%";
