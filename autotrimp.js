@@ -25,11 +25,11 @@ var myVar=setInterval(function () {myTimer()}, 10000);
 function updateConvo (place) {
   document.getElementById("q").innerHTML = conversation[place].Q;
   document.getElementById("1").innerHTML = conversation[place].R1;
-  document.getElementById("1").onclick = updateConvo(conversation[place].L1);
+  //document.getElementById("1").onclick = updateConvo(conversation[place].L1);
   document.getElementById("2").innerHTML = conversation[place].R2;
-  document.getElementById("2").onclick = updateConvo(conversation[place].L2);
+  //document.getElementById("2").onclick = updateConvo(conversation[place].L2);
   document.getElementById("3").innerHTML = conversation[place].R3;
-  document.getElementById("3").onclick = updateConvo(conversation[place].L3);
+  //document.getElementById("3").onclick = updateConvo(conversation[place].L3);
 }
 
 function talk() {
