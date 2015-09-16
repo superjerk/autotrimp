@@ -26,9 +26,9 @@ function updateConvo (place) {
   document.getElementById("q").innerHTML = conversation[place].Q;
   document.getElementById("1").innerHTML = conversation[place].R1;
   //document.getElementById("1").onclick = updateConvo(conversation[place].L1);
-  if (conversation[place].R2 !== null) {document.getElementById("2").innerHTML = conversation[place].R2;}
+  if ("R2" in conversation[place]) {document.getElementById("2").innerHTML = conversation[place].R2;}
   //document.getElementById("2").onclick = updateConvo(conversation[place].L2);
-  if (conversation[place].R3 !== null) {document.getElementById("3").innerHTML = conversation[place].R3;}
+  if ("R3" in conversation[place]) {document.getElementById("3").innerHTML = conversation[place].R3;}
   //document.getElementById("3").onclick = updateConvo(conversation[place].L3);
 }
 
