@@ -28,8 +28,10 @@ function updateConvo (place) {
   document.getElementById("1").innerHTML = conversation[place].R1;
   document.getElementById("1").onclick = (function() { var test = conversation[place].L1; return function() {updateConvo(test + '');}})();
   if ("R2" in conversation[place]) {document.getElementById("2").innerHTML = conversation[place].R2;}
+  else {document.getElementById("2").innerHTML = "";}
   if ("L2" in conversation[place]) {document.getElementById("2").onclick = (function() { var test = conversation[place].L2; return function() {updateConvo(test + '');}})();}
   if ("R3" in conversation[place]) {document.getElementById("3").innerHTML = conversation[place].R3;}
+  else {document.getElementById("3").innerHTML = "";}
   if ("L3" in conversation[place]) {document.getElementById("3").onclick = (function() { var test = conversation[place].L3; return function() {updateConvo(test + '');}})();}
 }
 
