@@ -26,11 +26,11 @@ var myVar=setInterval(function () {myTimer()}, 10000);
 function updateConvo (place) {
   document.getElementById("q").innerHTML = conversation[place].Q;
   document.getElementById("1").innerHTML = conversation[place].R1;
-  document.getElementById("1").setAttribute("onclick","updateConvo(conversation[place].L1)");
+  document.getElementById("1").onclick = (function() { var test = conversation[place].L1; return function() {updateConvo(test + '');}})();
   if ("R2" in conversation[place]) {document.getElementById("2").innerHTML = conversation[place].R2;}
-  if ("L2" in conversation[place]) {document.getElementById("2").setAttribute("onclick","updateConvo(conversation[place].L2)");}
+  if ("L2" in conversation[place]) {document.getElementById("2").onclick = (function() { var test = conversation[place].L2; return function() {updateConvo(test + '');}})();}
   if ("R3" in conversation[place]) {document.getElementById("3").innerHTML = conversation[place].R3;}
-  if ("L3" in conversation[place]) {document.getElementById("3").setAttribute("onclick","updateConvo(conversation[place].L3)");}
+  if ("L3" in conversation[place]) {document.getElementById("3").onclick = (function() { var test = conversation[place].L3; return function() {updateConvo(test + '');}})();}
 }
 
 function talk() {
