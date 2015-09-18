@@ -22,6 +22,8 @@ updateConvo(0);
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 
+alert("done");
+
 //only functions below here
 function updateConvo (place) {
   document.getElementById("q").innerHTML = conversation[place].Q;
