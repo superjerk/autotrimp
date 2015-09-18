@@ -17,7 +17,7 @@ conversation[0] = {Q:"Hello.",R1:"What?!?!",L1:3,R2:"Oh.",L2:1};
 conversation[1] = {Q:"What do you want to change?",R1:"Nothing.",L1:2,R2:"That's it.",L2:2};
 conversation[2] = {Q:"Ok.",R1:"Hello?",L1:0};
 conversation[3] = {Q:"Ok.",R1:"Ok.",L1:0};
-updateConvo(0);
+//updateConvo(0);
 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
