@@ -20,6 +20,21 @@ conversation[2] = {Q:"Ok.",R1:"Hello?",L1:0};
 conversation[3] = {Q:"Ok.",R1:"Ok.",L1:0};
 updateConvo(0);
 
+//setup options
+var test1 = {enabled: 0, description: "Test 1", titles: ["Test 1", "Not Test 1"]};
+var test2 = {enabled: 0, description: "Test 2", titles: ["Test 2", "Not Test 2"]};
+var test3 = {enabled: 0, description: "Test 3", titles: ["Test 3", "Not Test 3"]};
+var autoTSettings = {test1, test2, test3};
+
+var autosettings = document.getElementById("autosettings0");
+var html = "";
+for (var item in autoTSettings) {
+  var optionItem = autoTSettings[item]; 
+  var text = optionItem.titles[optionItem.enabled]; 
+  html += "<div class='optionContainer'><div id='toggle" + item + "' class='noselect settingBtn settingBtn" + optionItem.enabled + "' onclick='toggleAutoSetting(\"" + item + "\")'>" + text + "</div><div class='optionItemDescription'>" + optionItem.description + "</div></div> ";}
+autosettings.innerHTML = html;
+
+
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 
@@ -36,6 +51,21 @@ function updateConvo (place) {
   if ("R3" in conversation[place]) {document.getElementById("3").innerHTML = conversation[place].R3;}
   else {document.getElementById("3").innerHTML = "";}
   if ("L3" in conversation[place]) {document.getElementById("3").onclick = (function() { var test = conversation[place].L3; return function() {updateConvo(test + '');}})();}
+}
+
+function toggleAutoSetting(setting){
+	var autoOption = autoTSettings[setting];
+	var toggles = autoOption.titles.length;
+	if (toggles == 2)	autoOption.enabled = (autoOption.enabled) ? 0 : 1;
+	else {
+		autoOption.enabled++;
+		if (autoOption.enabled >= toggles) menuOption.enabled = 0;
+	}
+	if (autoOption.onToggle) autoOption.onToggle();
+	var menuElem = document.getElementById("toggle" + setting);
+	menuElem.innerHTML = autoOption.titles[autoOption.enabled];
+	menuElem.className = "";
+	menuElem.className = "settingBtn settingBtn" + autoOption.enabled;
 }
 
 function talk() {
