@@ -103,7 +103,9 @@ if (autoTSettings.autobuildings.enabled == 1) {
     buyBuilding('Forge');
   }
 }
+
 //Buy speed upgrades
+if (autoTSettings.autoupgrades.enabled == 1) {
   autotrimpupgrades = ["Egg", "UberHut", "UberHouse", "UberMansion", "UberHotel", "UberResort", "Bounty", "Efficiency", "TrainTacular", "Gymystic", "Megascience", "Megaminer", "Megalumber", "Megafarming", "Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
   for (var key in game.upgrades) {
     if (autotrimpupgrades.indexOf(key) != -1) { 
@@ -120,6 +122,8 @@ if (autoTSettings.autobuildings.enabled == 1) {
       buyUpgrade('Coordination');
     }
   }
+}
+
   //clearInterval(myVar);
 }//end loop
 
