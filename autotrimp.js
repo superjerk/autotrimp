@@ -21,10 +21,10 @@ conversation[3] = {Q:"Ok.",R1:"Ok.",L1:0};
 updateConvo(0);
 
 //setup options
-var autobuildings = {enabled: 0, description: "Automatically buy storage buildings at 90% capacity", titles: ["Not buying", "Buying"]};
-var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to the trimps", titles: ["Not Reading", "Reading"]};
-var test3 = {enabled: 0, description: "Test 3", titles: ["Not Test 3", "Test 3"]};
-var autoTSettings = {autobuildings, autoupgrades, test3};
+var autobuildings = {enabled: 0, description: "Automatically buy storage buildings at 90% capacity", titles: ["Not Buying", "Buying"]};
+var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
+var autohousing = {enabled: 0, description: "Automatically buy the most efficient housing (except wormholes and gigastations)", titles: ["Not Buying", "Buying"]};
+var autoTSettings = {autobuildings, autoupgrades, autohousing};
 
 //add buttons
 var autosettings = document.getElementById("autosettings0");
@@ -35,7 +35,13 @@ for (var item in autoTSettings) {
   html += "<div class='optionContainer'><div id='toggle" + item + "' class='noselect settingBtn settingBtn" + optionItem.enabled + "' onclick='toggleAutoSetting(\"" + item + "\")'>" + text + "</div><div class='optionItemDescription'>" + optionItem.description + "</div></div> ";}
 autosettings.innerHTML = html;
 
+//setup default settings
+toggleAutoSetting(autoTSettings.autobuildings);
+toggleAutoSetting(autoTSettings.autoupgrades);
 
+//create unlearn shieldblock button
+var autosettings = document.getElementById("autosettings0");
+var html = "<div class='optionContainer'><div id='remove Shieldblock" + "' class='noselect settingBtn settingBtn" + 0 + "' onclick='removeShieldblock()'>" + "Remove Shieldblock" + "</div><div class='optionItemDescription'>" + "If you want us trimps to stop using shields to block and use them for health again, we will." + "</div></div> "";
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 
@@ -52,6 +58,12 @@ function updateConvo (place) {
   if ("R3" in conversation[place]) {document.getElementById("3").innerHTML = conversation[place].R3;}
   else {document.getElementById("3").innerHTML = "";}
   if ("L3" in conversation[place]) {document.getElementById("3").onclick = (function() { var test = conversation[place].L3; return function() {updateConvo(test + '');}})();}
+}
+
+function removeShieldblock() {
+	game.upgrades.Shieldblock.done = 0;	
+	game.equipment.shield.blocknow = false;
+	game.equipment.tooltip = "A big, wooden shield. Adds $healthCalculated$ health to each soldier per level.";
 }
 
 function toggleAutoSetting(setting){
