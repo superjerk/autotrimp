@@ -21,11 +21,12 @@ conversation[3] = {Q:"Ok.",R1:"Ok.",L1:0};
 updateConvo(0);
 
 //setup options
-var test1 = {enabled: 0, description: "Test 1", titles: ["Test 1", "Not Test 1"]};
-var test2 = {enabled: 0, description: "Test 2", titles: ["Test 2", "Not Test 2"]};
-var test3 = {enabled: 0, description: "Test 3", titles: ["Test 3", "Not Test 3"]};
-var autoTSettings = {test1, test2, test3};
+var autobuildings = {enabled: 0, description: "Automatically buy storage buildings at 90% capacity", titles: ["Not buying", "Buying"]};
+var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to the trimps", titles: ["Not Reading", "Reading"]};
+var test3 = {enabled: 0, description: "Test 3", titles: ["Not Test 3", "Test 3"]};
+var autoTSettings = {autobuildings, autoupgrades, test3};
 
+//add buttons
 var autosettings = document.getElementById("autosettings0");
 var html = "";
 for (var item in autoTSettings) {
@@ -78,7 +79,8 @@ function myTimer() {
   var metal = game.resources.metal.owned / game.resources.metal.max;
 
 //Buy resource buildings
-
+if (autoTSettings.autobuildings.enabled == 1) {
+  alert("on");
   if (food > .9) {
     buyBuilding('Barn');
   }
@@ -88,7 +90,7 @@ function myTimer() {
   if (metal > .9) {
     buyBuilding('Forge');
   }
-
+}
 //Buy speed upgrades
   autotrimpupgrades = ["Egg", "UberHut", "UberHouse", "UberMansion", "UberHotel", "UberResort", "Bounty", "Efficiency", "TrainTacular", "Gymystic", "Megascience", "Megaminer", "Megalumber", "Megafarming", "Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
   for (var key in game.upgrades) {
