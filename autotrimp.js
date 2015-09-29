@@ -79,13 +79,13 @@ function myTimer() {
 
 //Buy resource buildings
 
-  if (food > .8) {
+  if (food > .9) {
     buyBuilding('Barn');
   }
-  if (wood > .8) {
+  if (wood > .9) {
     buyBuilding('Shed');
   }
-  if (metal > .8) {
+  if (metal > .9) {
     buyBuilding('Forge');
   }
 
