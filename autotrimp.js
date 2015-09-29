@@ -93,7 +93,6 @@ function myTimer() {
 
 //Buy resource buildings
 if (autoTSettings.autobuildings.enabled == 1) {
-  alert("on");
   if (food > .9) {
     buyBuilding('Barn');
   }
