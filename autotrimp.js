@@ -36,12 +36,12 @@ for (var item in autoTSettings) {
 autosettings.innerHTML = html;
 
 //setup default settings
-toggleAutoSetting(autoTSettings.autobuildings);
-toggleAutoSetting(autoTSettings.autoupgrades);
+toggleAutoSetting("autobuildings");
+toggleAutoSetting("autoupgrades");
 
 //create unlearn shieldblock button
-var autosettings = document.getElementById("autosettings0");
-var html = "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn 0' onclick='removeShieldblock()'>Remove Shieldblock</div><div class='optionItemDescription'>If you want us trimps to stop using shields to block and use them for health again, we will.</div></div>";
+autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn 0' onclick='removeShieldblock()'>Remove Shieldblock</div><div class='optionItemDescription'>If you want us trimps to stop using shields to block and use them for health again, we will.</div></div>");
+
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 
