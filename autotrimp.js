@@ -67,6 +67,8 @@ function removeShieldblock() {
 		game.upgrades.Shieldblock.done = 0;	
 		game.equipment.Shield.blockNow = false;
 		game.equipment.Shield.tooltip = "A big, wooden shield. Adds $healthCalculated$ health to each soldier per level.";
+		prestigeEquipment("Shield", false, true);
+		levelEquipment("Shield", 1);
 		document.getElemendById("remove Shieldblock").class = "noselect settingBtn settingBtn0";
 	}
 }
