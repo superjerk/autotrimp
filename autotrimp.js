@@ -41,7 +41,7 @@ toggleAutoSetting(autoTSettings.autoupgrades);
 
 //create unlearn shieldblock button
 var autosettings = document.getElementById("autosettings0");
-var html = "<div class='optionContainer'><div id='remove Shieldblock" + "' class='noselect settingBtn settingBtn" + 0 + "' onclick='removeShieldblock()'>" + "Remove Shieldblock" + "</div><div class='optionItemDescription'>" + "If you want us trimps to stop using shields to block and use them for health again, we will." + "</div></div> "";
+var html = "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn 0' onclick='removeShieldblock()'>Remove Shieldblock</div><div class='optionItemDescription'>If you want us trimps to stop using shields to block and use them for health again, we will.</div></div>";
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 
@@ -64,6 +64,7 @@ function removeShieldblock() {
 	game.upgrades.Shieldblock.done = 0;	
 	game.equipment.shield.blocknow = false;
 	game.equipment.tooltip = "A big, wooden shield. Adds $healthCalculated$ health to each soldier per level.";
+	document.getElemendById("remove Shieldblock").class = "noselect settingBtn settingBtn 1";
 }
 
 function toggleAutoSetting(setting){
