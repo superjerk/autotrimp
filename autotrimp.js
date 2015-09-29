@@ -64,11 +64,11 @@ function updateConvo (place) {
 
 function removeShieldblock() {
 	if (game.upgrades.Shieldblock.done == 1) {
-		game.upgrades.Shieldblock.done = 0;	
+		prestigeEquipment("Shield", false, true);
 		game.equipment.Shield.blockNow = false;
 		game.equipment.Shield.tooltip = "A big, wooden shield. Adds $healthCalculated$ health to each soldier per level.";
-		prestigeEquipment("Shield", false, true);
 		levelEquipment("Shield", 1);
+		game.upgrades.Shieldblock.done = 0;	
 		document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn0";
 	}
 }
