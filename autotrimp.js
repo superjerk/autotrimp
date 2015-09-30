@@ -113,7 +113,7 @@ if (autoTSettings.autobuildings.enabled == 1) {
 }
 
 //Buy tributes
-if (autTSettings.autotributes.enabled ==1) {
+if (autoTSettings.autotributes.enabled ==1) {
 	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned) {
 		buyBuilding('Tribute');	
 	}
@@ -121,7 +121,7 @@ if (autTSettings.autotributes.enabled ==1) {
 
 //Buy gyms
 
-if (autTSettings.autogyms.enabled ==1) {
+if (autoTSettings.autogyms.enabled ==1) {
 	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned) {
 		buyBuilding('Gym');	
 	}
