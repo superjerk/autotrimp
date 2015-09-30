@@ -21,10 +21,12 @@ conversation[3] = {Q:"Ok.",R1:"Ok.",L1:0};
 updateConvo(0);
 
 //setup options
-var autobuildings = {enabled: 0, description: "Automatically buy storage buildings at 90% capacity", titles: ["Not Buying", "Buying"]};
+var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
 var autohousing = {enabled: 0, description: "Automatically buy the most efficient housing (except wormholes and gigastations)", titles: ["Not Buying", "Buying"]};
-var autoTSettings = {autobuildings, autoupgrades, autohousing};
+var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
+var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
+var autoTSettings = {autobuildings, autoupgrades, autohousing, autotributes, autogyms};
 
 //add buttons
 var autosettings = document.getElementById("autosettings0");
@@ -40,7 +42,7 @@ toggleAutoSetting("autobuildings");
 toggleAutoSetting("autoupgrades");
 
 //create unlearn shieldblock button
-autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn0' onclick='removeShieldblock()'>Remove Shieldblock</div><div class='optionItemDescription'>If you want us trimps to stop using shields to block and use them for health again, we will.</div></div>");
+autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn0' onclick='removeShieldblock()'>Remove Shieldblock</div><div class='optionItemDescription'>If you want the trimps to stop using shields to block and use them for health again</div></div>");
 if (game.upgrades.Shieldblock.done == 1) {
 	document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn1";
 }
@@ -109,6 +111,23 @@ if (autoTSettings.autobuildings.enabled == 1) {
     buyBuilding('Forge');
   }
 }
+
+//Buy tributes
+if (autTSettings.autotributes.enabled ==1) {
+	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned) {
+		buyBuilding('Tribute');	
+	}
+}
+
+//Buy gyms
+
+if (autTSettings.autogyms.enabled ==1) {
+	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned) {
+		buyBuilding('Gym');	
+	}
+}
+
+
 
 //Buy speed upgrades
 if (autoTSettings.autoupgrades.enabled == 1) {
