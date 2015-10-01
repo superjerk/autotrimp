@@ -42,7 +42,7 @@ toggleAutoSetting("autobuildings");
 toggleAutoSetting("autoupgrades");
 
 //create unlearn shieldblock button
-autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn0' onclick='removeShieldblock()'>Remove Shieldblock</div><div class='optionItemDescription'>If you want the trimps to stop using shields to block and use them for health again</div></div>");
+autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn0' onclick='removeShieldblock()'>Unlearn Shieldblock</div><div class='optionItemDescription'>We'll stop teaching the trimps to use shields to block and we'll use them for health again</div></div>");
 if (game.upgrades.Shieldblock.done == 1) {
 	document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn1";
 }
