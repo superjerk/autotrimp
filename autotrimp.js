@@ -86,7 +86,7 @@ function getHousingRatio() {
 			cost += (getBuildingItemPrice(building, costItem) * costConst[costItem]);
 		}
 		var ratio = cost / building.increase.by;
-		obj[ahouse] = ratio;
+		obj[housing[ahouse]] = ratio;
 	}
 	return obj;
 }
