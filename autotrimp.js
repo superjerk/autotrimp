@@ -53,12 +53,12 @@ toggleAutoSetting("autoupgrades");
 //create unlearn shieldblock button
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn0' onclick='removeShieldblock()'>Unlearn Shieldblock</div><div class='optionItemDescription'>We'll stop teaching the trimps to use shields to block and we'll use them for health again</div></div>");
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='add Respec' class='noselect settingBtn settingBtn0' onclick='addRespec()'>Add a Respec</div><div class='optionItemDescription'>If you've already used your respec but want to do it again anyway, let me know.</div></div>");
-if (game.upgrades.Shieldblock.done == 1) {
-	document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn1";
-}
-if (game.global.canRespecPerks == false) {
-	document.getElemendById("add Respec").className = "noselect settingBtn settingBtn1";
-}
+//if (game.upgrades.Shieldblock.done == 1) {
+//	document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn1";
+//}
+//if (game.global.canRespecPerks == false) {
+//	document.getElemendById("add Respec").className = "noselect settingBtn settingBtn1";
+//}
 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
@@ -85,14 +85,14 @@ function removeShieldblock() {
 		game.equipment.Shield.tooltip = "A big, wooden shield. Adds $healthCalculated$ health to each soldier per level.";
 		levelEquipment("Shield", 1);
 		game.upgrades.Shieldblock.done = 0;	
-		document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn0";
+//		document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn0";
 	}
 }
 
 function addRespec() {
 	if (game.global.canRespecPerks == false) {
 		game.global.canRespecPerks = true;
-		document.getElemendById("add Respec").className = "noselect settingBtn settingBtn0";
+//		document.getElemendById("add Respec").className = "noselect settingBtn settingBtn0";
 	}
 }
 
