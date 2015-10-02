@@ -76,11 +76,11 @@ function removeShieldblock() {
 }
 
 function getHousingRatio() {
-	var housing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Gateway", "Collector", "Warpstation"]
+	var housing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Gateway", "Collector", "Warpstation"];
 	var costConst = {food:1, wood:2, metal:4, gems:8};
 	var obj = {};
 	for (ahouse in housing) {
-		var building = game.buildings[ahouse];
+		var building = game.buildings[housing[ahouse]];
 		var cost = 0;
 		for (costItem in building.cost) {
 			cost += (getBuildingItemPrice(building, costItem) * costConst[costItem]);
