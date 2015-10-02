@@ -75,16 +75,20 @@ function removeShieldblock() {
 	}
 }
 
-function getHousingRatio(housing) {
-	var building = game.buildings[housing];
-	var cost = 0;
-	var costConst = {food:1, wood:2, metal:8, gems:16};
-	var ratios = {};
-	for (costItem in building.cost) {
-		cost += (getBuildingItemPrice(building, costItem) * costConst[costItem])
+function getHousingRatio() {
+	var housing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Gateway", "Collector", "Warpstation"]
+	var costConst = {food:1, wood:2, metal:4, gems:8};
+	var obj = {};
+	for (ahouse in housing) {
+		var building = game.buildings[ahouse];
+		var cost = 0;
+		for (costItem in building.cost) {
+			cost += (getBuildingItemPrice(building, costItem) * costConst[costItem]);
+		}
+		var ratio = cost / building.increase.by;
+		obj[ahouse] = ratio;
 	}
-	var ratio = cost / building.increase.by
-	console.log(ratio)
+	return obj;
 }
 
 function toggleAutoSetting(setting){
