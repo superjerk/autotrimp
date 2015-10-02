@@ -75,6 +75,18 @@ function removeShieldblock() {
 	}
 }
 
+function getHousingRatio(housing) {
+	var building = game.buildings[housing];
+	var cost = 0;
+	var costConst = {food:1, wood:2, metal:8, gems:16};
+	var ratios = {};
+	for (costItem in building.cost) {
+		cost += (getBuildingItemPrice(building, costItem) * costConst[costItem])
+	}
+	var ratio = cost / building.increase.by
+	console.log(ratio)
+}
+
 function toggleAutoSetting(setting){
 	var autoOption = autoTSettings[setting];
 	var toggles = autoOption.titles.length;
