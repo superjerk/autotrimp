@@ -76,7 +76,7 @@ function removeShieldblock() {
 }
 
 function getHousingRatio() {
-	var housing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Gateway", "Collector", "Warpstation"];
+	var housing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
 	var costConst = {food:1, wood:2, metal:4, gems:8};
 	var obj = {};
 	for (ahouse in housing) {
