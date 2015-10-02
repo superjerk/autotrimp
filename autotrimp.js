@@ -80,7 +80,7 @@ function getHousingRatio() {
 	//var acostConst = {food:1, wood:2, metal:4, gems:8};
 	var aobj = {};
 	for (ahouse in ahousing) {
-		var abuilding = game.buildings[housing[ahouse]];
+		var abuilding = game.buildings[ahousing[ahouse]];
 		var atime = 0;
 		for (acostItem in abuilding.cost) {
 			var acost = 0;
