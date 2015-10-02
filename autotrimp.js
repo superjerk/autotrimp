@@ -23,10 +23,10 @@ updateConvo(0);
 //setup options
 var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
-var autohousing = {enabled: 0, description: "Automatically buy the most efficient housing (except wormholes and gigastations)", titles: ["Not Buying", "Buying"]};
+//var autohousing = {enabled: 0, description: "Automatically buy the most efficient housing (except wormholes and gigastations)", titles: ["Not Buying", "Buying"]};
 var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
 var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
-var autoTSettings = {autobuildings, autoupgrades, autohousing, autotributes, autogyms};
+var autoTSettings = {autobuildings, autoupgrades, autotributes, autogyms};
 
 //add buttons
 var autosettings = document.getElementById("autosettings0");
@@ -75,30 +75,30 @@ function removeShieldblock() {
 	}
 }
 
-function getHousingRatio() {
-	var ahousing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
-	//var acostConst = {food:1, wood:2, metal:4, gems:8};
-	var aobj = {};
-	for (ahouse in ahousing) {
-		var abuilding = game.buildings[ahousing[ahouse]];
-		var atime = 0;
-		for (acostItem in abuilding.cost) {
-			var acost = 0;
-			var aprod = 0;
-			acost += getBuildingItemPrice(abuilding, acostItem);
-			if (acostItem = "gems") {
-			aprod = game.jobs.Dragimp.modifier	
-			}else {
-			aprod = game.jobs[acostItem].owned * game.jobs[acostItem].modifier;
-			}
-			if (game.portal.Motivation.level) aprod += (game.portal.Motivation.level * game.portal.Motivation.modifier * aprod);
-			atime += acost/aprod;
-		}
-		var aratio = atime / abuilding.increase.by;
-		aobj[ahousing[ahouse]] = aratio;
-	}
-	return aobj;
-}
+//function getHousingRatio() {
+//	var ahousing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
+//	//var acostConst = {food:1, wood:2, metal:4, gems:8};
+//	var aobj = {};
+//	for (ahouse in ahousing) {
+//		var abuilding = game.buildings[ahousing[ahouse]];
+//		var atime = 0;
+//		for (acostItem in abuilding.cost) {
+//			var acost = 0;
+//			var aprod = 0;
+//			acost += getBuildingItemPrice(abuilding, acostItem);
+//			if (acostItem = "gems") {
+//			aprod = game.jobs.Dragimp.modifier	
+//			}else {
+//			aprod = game.jobs[acostItem].owned * game.jobs[acostItem].modifier;
+//			}
+//			if (game.portal.Motivation.level) aprod += (game.portal.Motivation.level * game.portal.Motivation.modifier * aprod);
+//			atime += acost/aprod;
+//		}
+//		var aratio = atime / abuilding.increase.by;
+//		aobj[ahousing[ahouse]] = aratio;
+//	}
+//	return aobj;
+//}
 
 function toggleAutoSetting(setting){
 	var autoOption = autoTSettings[setting];
