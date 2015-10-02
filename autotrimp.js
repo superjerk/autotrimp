@@ -15,9 +15,18 @@ document.getElementById("autotrimp").insertAdjacentHTML('beforeend', '<div style
 //setup convo array
 var conversation = [];
 conversation[0] = {Q:"Hello.",R1:"What?!?!",L1:3,R2:"Oh.",L2:1};
-conversation[1] = {Q:"What do you want to change?",R1:"Nothing.",L1:2,R2:"That's it.",L2:2};
+conversation[1] = {Q:"What do you want to change? Click the buttons below.",R1:"Nothing.",L1:2,R2:"That's it.",L2:2};
 conversation[2] = {Q:"Ok.",R1:"Hello?",L1:0};
-conversation[3] = {Q:"Ok.",R1:"Ok.",L1:0};
+conversation[3] = {Q:"I figured you'd find me eventually. Before you ask...yes, I can talk. No, none of the other trimps seem to be able to.",R1:"What else do you know?",L1:4};
+conversation[4] = {Q:"Not much more than you, unfortunately. Whatever brought you here is also what made me...smarter than the average trimp. Before you got here, I wasn't anymore self aware than any other trimp.",R1:"What are we doing here?",L1:5};
+conversation[5] = {Q:"I don't know--I don't even know where <b>here</b> is. This is all new to me too.",R1:"Well, what do you suggest we do?",L1:6};
+conversation[6] = {Q:"Keep going. Maybe we'll find some answers. Since we're friends now, I've picked up a few tricks that will help us.",R1:"Like what?",L1:7};
+conversation[7] = {Q:"I can tell the trimps to build storage buildings before they get full. I can also read some upgrade books when you're not around.",R1:"Which upgrade books?",L1:8, R2:"What else?", L2:9};
+conversation[8] = {Q:"The upgrades I can read are: Speedfarming, Speedlumber, Speedminer, Speedscience, (all the Mega versions too), Efficiency, TrainTacular, Gymystic, Potency, Egg, UberHut, UberHouse, UberMansion, UberHotel, UberResort, and Bounty",R1:"Ok, cool",L1:9};
+conversation[9] = {Q:"I can also buy Gyms and Tributes as soon as we can afford them, and I can <b>unteach</b> Shieldblock.",R1:"Why unteach Shieldblock?",L1:10, R2:"Anything else?",L2:11};
+conversation[10] = {Q:"As we learn more and more Gymystic, our shields becomes less and less useful for blocking. The extra health comes in real handy post z60.",R1:"I get it.",L1:11};
+conversation[11] = {Q:"I can also help you respec all the portal perks. We get one automatically, but sometimes you need a second, or a third, or whatever.",R1:"Ok.",L1:12};
+conversation[12] = {Q:"That's it for now, but I'll let you know if I pick up any more tricks. Use the buttons below to let me know what you'd like done.",R1:"Ok.",L1:2};
 updateConvo(0);
 
 //setup options
@@ -43,9 +52,14 @@ toggleAutoSetting("autoupgrades");
 
 //create unlearn shieldblock button
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn0' onclick='removeShieldblock()'>Unlearn Shieldblock</div><div class='optionItemDescription'>We'll stop teaching the trimps to use shields to block and we'll use them for health again</div></div>");
+autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='add Respec' class='noselect settingBtn settingBtn0' onclick='addRespec()'>Add a Respec</div><div class='optionItemDescription'>If you've already used your respec but want to do it again anyway, let me know.</div></div>");
 if (game.upgrades.Shieldblock.done == 1) {
 	document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn1";
 }
+if (game.global.canRespecPerks == false) {
+	document.getElemendById("add Respec").className = "noselect settingBtn settingBtn1";
+}
+
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 
@@ -72,6 +86,13 @@ function removeShieldblock() {
 		levelEquipment("Shield", 1);
 		game.upgrades.Shieldblock.done = 0;	
 		document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn0";
+	}
+}
+
+function addRespec() {
+	if (game.global.canRespecPerks == false) {
+		game.global.canRespecPerks = true;
+		document.getElemendById("add Respec").className = "noselect settingBtn settingBtn0";
 	}
 }
 
