@@ -76,19 +76,28 @@ function removeShieldblock() {
 }
 
 function getHousingRatio() {
-	var housing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
-	var costConst = {food:1, wood:2, metal:4, gems:8};
-	var obj = {};
-	for (ahouse in housing) {
-		var building = game.buildings[housing[ahouse]];
-		var cost = 0;
-		for (costItem in building.cost) {
-			cost += (getBuildingItemPrice(building, costItem) * costConst[costItem]);
+	var ahousing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
+	//var acostConst = {food:1, wood:2, metal:4, gems:8};
+	var aobj = {};
+	for (ahouse in ahousing) {
+		var abuilding = game.buildings[housing[ahouse]];
+		var atime = 0;
+		for (acostItem in abuilding.cost) {
+			var acost = 0;
+			var aprod = 0;
+			acost += getBuildingItemPrice(abuilding, acostItem);
+			if (acostItem = "gems") {
+			aprod = game.jobs.Dragimp.modifier	
+			}else {
+			aprod = game.jobs[acostItem].owned * game.jobs[acostItem].modifier;
+			}
+			if (game.portal.Motivation.level) aprod += (game.portal.Motivation.level * game.portal.Motivation.modifier * aprod);
+			atime += acost/aprod;
 		}
-		var ratio = cost / building.increase.by;
-		obj[housing[ahouse]] = ratio;
+		var aratio = atime / abuilding.increase.by;
+		aobj[ahousing[ahouse]] = aratio;
 	}
-	return obj;
+	return aobj;
 }
 
 function toggleAutoSetting(setting){
