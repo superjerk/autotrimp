@@ -26,7 +26,7 @@ conversation[7] = {Q:"I can tell the trimps to build storage buildings before th
 conversation[8] = {Q:"The upgrades I can read are: Speedfarming, Speedlumber, Speedminer, Speedscience, (all the Mega versions too), Efficiency, TrainTacular, Gymystic, Potency, Egg, UberHut, UberHouse, UberMansion, UberHotel, UberResort, and Bounty",R1:"Ok, cool",L1:9};
 conversation[9] = {Q:"I can also highlight the housing that makes the most use of our gems, and I can <b>unteach</b> Shieldblock.",R1:"Why unteach Shieldblock?",L1:10, R2:"Anything else?",L2:11};
 conversation[10] = {Q:"As we learn more and more Gymystic, our shields becomes less and less useful for blocking. The extra health comes in real handy post z60.",R1:"I get it.",L1:11};
-conversation[11] = {Q:"I can also help you respec all the portal perks. We get one automatically, but sometimes you need a second, or a third, or whatever.",R1:"Ok.",L1:12};
+conversation[11] = {Q:"I can help you respec the portal perks if you've already done it this round, and I can automatically flip between Dominance and Heap formations depending on the enemy we're facing.",R1:"Ok.",L1:12};
 conversation[12] = {Q:"That's it for now, but I'll let you know if I pick up any more tricks. Use the buttons below to let me know what you'd like done.",R1:"Ok.",L1:2};
 updateConvo(0);
 
