@@ -1,9 +1,10 @@
 //Old load notification
 //document.getElementById("food").appendChild(document.createTextNode("*"));
 
-//fix paddings for id=buyCol and id=rightCol to .3%
-//document.getElementById("buyCol").style.paddingRight = ".3%";
-//document.getElementById("rightCol").style.paddingLeft = ".3%";
+//Line things up, OCD FTW!
+//fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
+//fixed !!document.getElementById("rightCol").style.paddingLeft = ".3%";
+document.getElementById("helium").style.height = "32.4%";
 
 //setup talk button
 document.getElementById("buildingsQueue").innerHTML = "<div style='width: 75%; float: left;'><span style='display: block;' id='noQueue'>Nothing in queue...</span><div id='queueItemsHere'></div></div><div style='color: rgb(255, 255, 255); font-size: 1.2em; text-align: center; padding-left: 22px; padding-top: 2px; padding-right: 0px;' class='col-xs-3'><div id='buildingsCollectBtn' class='workBtn pointer noselect' onClick='talk()' style='background: rgb(0, 0, 0) none repeat scroll 0% 0%;'>Talk</div></div>";
@@ -51,14 +52,8 @@ toggleAutoSetting("autobuildings");
 toggleAutoSetting("autoupgrades");
 
 //create unlearn shieldblock button
-autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn settingBtn0' onclick='removeShieldblock()'>Unlearn Shieldblock</div><div class='optionItemDescription'>We'll stop teaching the trimps to use shields to block and we'll use them for health again</div></div>");
-autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='add Respec' class='noselect settingBtn settingBtn0' onclick='addRespec()'>Add a Respec</div><div class='optionItemDescription'>If you've already used your respec but want to do it again anyway, let me know.</div></div>");
-//if (game.upgrades.Shieldblock.done == 1) {
-//	document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn1";
-//}
-//if (game.global.canRespecPerks == false) {
-//	document.getElemendById("add Respec").className = "noselect settingBtn settingBtn1";
-//}
+autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn btn-warning' onclick='removeShieldblock()'>Unlearn Shieldblock</div><div class='optionItemDescription'>We'll stop teaching the trimps to use shields to block and we'll use them for health again</div></div>");
+autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='add Respec' class='noselect settingBtn btn-warning' onclick='addRespec()'>Add a Respec</div><div class='optionItemDescription'>If you've already used your respec but want to do it again anyway, let me know.</div></div>");
 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
@@ -85,14 +80,12 @@ function removeShieldblock() {
 		game.equipment.Shield.tooltip = "A big, wooden shield. Adds $healthCalculated$ health to each soldier per level.";
 		levelEquipment("Shield", 1);
 		game.upgrades.Shieldblock.done = 0;	
-//		document.getElemendById("remove Shieldblock").className = "noselect settingBtn settingBtn0";
 	}
 }
 
 function addRespec() {
 	if (game.global.canRespecPerks == false) {
 		game.global.canRespecPerks = true;
-//		document.getElemendById("add Respec").className = "noselect settingBtn settingBtn0";
 	}
 }
 
