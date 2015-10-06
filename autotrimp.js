@@ -32,7 +32,7 @@ updateConvo(0);
 //setup options
 var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
-var autohousing = {enabled: 0, description: "Highlight the most gem-efficient and metal-efficient housing (in green and grey)", titles: ["Not Buying", "Buying"]};
+var autohousing = {enabled: 0, description: "Highlight the most gem-efficient and metal-efficient housing (in green and grey)", titles: ["Not Highlighting", "Highlighting"]};
 var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
 var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
 var autoTSettings = {autobuildings, autotributes, autogyms, autoupgrades, autohousing};
@@ -62,7 +62,7 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
-
+var gobj = {};
 //alert("done");
 
 //only functions below here
@@ -176,7 +176,7 @@ if (autoTSettings.autogyms.enabled == 1) {
 //Highlight housing
 if (autoTSettings.autohousing.enabled == 1) {
 	var ghousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
-	var gobj = {};
+
 	for (ghouse in ghousing) {
 		var gbuilding = game.buildings[ghousing[ghouse]];
 		var gcost = 0;
