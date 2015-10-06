@@ -183,10 +183,12 @@ if (autoTSettings.autohousing.enabled == 1) {
 		gcost += getBuildingItemPrice(gbuilding, "gems");
 		var gratio = gcost / gbuilding.increase.by;
 		gobj[ghousing[ghouse]] = gratio;
+		if (document.getElementById(ghousing[ghouse]).style.border = "1px solid green") {
+			document.getElementById(ghousing[ghouse]).style.border = "1px solid white";
+		}
 	}
 	var keysSorted = Object.keys(gobj).sort(function(a,b){return gobj[a]-gobj[b]});
-
-//	document.getElementById(keysSorted[0]).style.border = "1px solid red";
+	document.getElementById(keysSorted[0]).style.border = "1px solid green";
 }
 
 
