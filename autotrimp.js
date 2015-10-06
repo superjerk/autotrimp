@@ -32,7 +32,7 @@ updateConvo(0);
 //setup options
 var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
-var autohousing = {enabled: 0, description: "Highlight the most gem-efficient and metal-efficient housing (in green and grey)", titles: ["Not Highlighting", "Highlighting"]};
+var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
 var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
 var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
 var autoTSettings = {autobuildings, autotributes, autogyms, autoupgrades, autohousing};
@@ -96,31 +96,6 @@ function addRespec() {
 	}
 }
 
-//function getHousingRatio() {
-//	var ahousing = ["Hut", "House", "Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
-//	//var acostConst = {food:1, wood:2, metal:4, gems:8};
-//	var aobj = {};
-//	for (ahouse in ahousing) {
-//		var abuilding = game.buildings[ahousing[ahouse]];
-//		var atime = 0;
-//		for (acostItem in abuilding.cost) {
-//			var acost = 0;
-//			var aprod = 0;
-//			acost += getBuildingItemPrice(abuilding, acostItem);
-//			if (acostItem = "gems") {
-//			aprod = game.jobs.Dragimp.modifier	
-//			}else {
-//			aprod = game.jobs[acostItem].owned * game.jobs[acostItem].modifier;
-//			}
-//			if (game.portal.Motivation.level) aprod += (game.portal.Motivation.level * game.portal.Motivation.modifier * aprod);
-//			atime += acost/aprod;
-//		}
-//		var aratio = atime / abuilding.increase.by;
-//		aobj[ahousing[ahouse]] = aratio;
-//	}
-//	return aobj;
-//}
-
 function toggleAutoSetting(setting){
 	var autoOption = autoTSettings[setting];
 	var toggles = autoOption.titles.length;
@@ -149,19 +124,23 @@ function myTimer() {
 if (autoTSettings.autobuildings.enabled == 1) {
   if (food > .9) {
     buyBuilding('Barn');
+    message("Bought us another barn. It's red...hooray.", "Loot", "*eye2", "exotic");
   }
   if (wood > .9) {
     buyBuilding('Shed');
+    message("Bought us another shed. It's very shed-like", "Loot", "*eye2", "exotic");
   }
   if (metal > .9) {
     buyBuilding('Forge');
+    message("Bought us another forge. It's a good forge.", "Loot", "*eye2", "exotic")
   }
 }
 
 //Buy tributes
 if (autoTSettings.autotributes.enabled == 1) {
 	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned) {
-		buyBuilding('Tribute');	
+		buyBuilding('Tribute');
+		message("Bought us a tribute. The gems must flow!", "Loot", "*eye2", "exotic")
 	}
 }
 
@@ -169,7 +148,8 @@ if (autoTSettings.autotributes.enabled == 1) {
 
 if (autoTSettings.autogyms.enabled == 1) {
 	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned) {
-		buyBuilding('Gym');	
+		buyBuilding('Gym');
+		message("Bought us a gym. Open 24/7.", "Loot", "*eye2", "exotic")
 	}
 }
 
@@ -203,6 +183,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
     if (autotrimpupgrades.indexOf(key) != -1) { 
       if (game.upgrades[key].allowed > game.upgrades[key].done) {
         buyUpgrade(key);
+        message("Read the trimps the " + key + " book. Only some of them listened.", "Loot", "*eye2", "exotic")
       }
     }
   }
@@ -212,6 +193,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
   if (game.upgrades.Coordination.allowed > game.upgrades.Coordination.done) {
     if ((game.resources.trimps.realMax() > (game.resources.trimps.maxSoldiers * 3))) {
       buyUpgrade('Coordination');
+      message("We read Coordination together before bedtime, it was sweet. Now let's go kill something.", "Loot", "*eye2", "exotic")
     }
   }
 }
