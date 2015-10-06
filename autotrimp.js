@@ -18,7 +18,7 @@ conversation[0] = {Q:"Hello.",R1:"What?!?!",L1:3,R2:"Oh.",L2:1};
 conversation[1] = {Q:"What do you want to change? Click the buttons below.",R1:"Nothing.",L1:2,R2:"That's it.",L2:2};
 conversation[2] = {Q:"Ok.",R1:"Hello?",L1:0};
 conversation[3] = {Q:"I figured you'd find me eventually. Before you ask...yes, I can talk. No, none of the other trimps seem to be able to.",R1:"What else do you know?",L1:4};
-conversation[4] = {Q:"Not much more than you, unfortunately. Whatever brought you here is also what made me...smarter than the average trimp. Before you got here, I wasn't anymore self aware than any other trimp.",R1:"What are we doing here?",L1:5};
+conversation[4] = {Q:"Not much more than you, unfortunately. Whatever brought you here is also what made me...smarter than the average trimp. Before you got here, I wasn't anymore self-aware than any other trimp.",R1:"What are we doing here?",L1:5};
 conversation[5] = {Q:"I don't know--I don't even know where <b>here</b> is. This is all new to me too.",R1:"Well, what do you suggest we do?",L1:6};
 conversation[6] = {Q:"Keep going. Maybe we'll find some answers. Since we're friends now, I've picked up a few tricks that will help us.",R1:"Like what?",L1:7};
 conversation[7] = {Q:"I can tell the trimps to build storage buildings before they get full. I can also read some upgrade books when you're not around.",R1:"Which upgrade books?",L1:8, R2:"What else?", L2:9};
@@ -32,10 +32,10 @@ updateConvo(0);
 //setup options
 var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
-//var autohousing = {enabled: 0, description: "Automatically buy the most efficient housing (except wormholes and gigastations)", titles: ["Not Buying", "Buying"]};
+var autohousing = {enabled: 0, description: "Highlight the most gem-efficient and metal-efficient housing (in green and grey)", titles: ["Not Buying", "Buying"]};
 var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
 var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
-var autoTSettings = {autobuildings, autoupgrades, autotributes, autogyms};
+var autoTSettings = {autobuildings, autotributes, autogyms, autoupgrades, autohousing};
 
 //add buttons
 var autosettings = document.getElementById("autosettings0");
@@ -159,7 +159,7 @@ if (autoTSettings.autobuildings.enabled == 1) {
 }
 
 //Buy tributes
-if (autoTSettings.autotributes.enabled ==1) {
+if (autoTSettings.autotributes.enabled == 1) {
 	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned) {
 		buyBuilding('Tribute');	
 	}
@@ -167,12 +167,27 @@ if (autoTSettings.autotributes.enabled ==1) {
 
 //Buy gyms
 
-if (autoTSettings.autogyms.enabled ==1) {
+if (autoTSettings.autogyms.enabled == 1) {
 	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned) {
 		buyBuilding('Gym');	
 	}
 }
 
+//Highlight housing
+if (autoTSettings.autohousing.enabled == 1) {
+	var ghousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
+	var gobj = {};
+	for (ghouse in ghousing) {
+		var gbuilding = game.buildings[ghousing[ghouse]];
+		var gcost = 0;
+		gcost += getBuildingItemPrice(gbuilding, "gems");
+		var gratio = gcost / gbuilding.increase.by;
+		gobj[ghousing[ghouse]] = gratio;
+	}
+	var keysSorted = Object.keys(gobj).sort(function(a,b){return gobj[a]-gobj[b]});
+
+//	document.getElementById(keysSorted[0]).style.border = "1px solid red";
+}
 
 
 //Buy speed upgrades
