@@ -5,7 +5,7 @@
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
 //fixed !!document.getElementById("rightCol").style.paddingLeft = ".3%";
 document.getElementById("helium").style.height = "32.4%";
-document.getElementById("boneFlavorRow").innerHTML = "The Bone Trader trades bones for...bonuses";
+document.getElementById("boneFlavorRow").innerHTML = "The Bone Trader trades bones for...bonuses"
 
 //setup talk button
 document.getElementById("buildingsQueue").innerHTML = "<div style='width: 75%; float: left;'><span style='display: block;' id='noQueue'>Nothing in queue...</span><div id='queueItemsHere'></div></div><div style='color: rgb(255, 255, 255); font-size: 1.2em; text-align: center; padding-left: 22px; padding-top: 2px; padding-right: 0px;' class='col-xs-3'><div id='buildingsCollectBtn' class='workBtn pointer noselect' onClick='talk()' style='background: rgb(0, 0, 0) none repeat scroll 0% 0%;'>Talk</div></div>";
