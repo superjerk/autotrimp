@@ -150,19 +150,27 @@ if (autoTSettings.autogyms.enabled == 1) {
 
 //Highlight housing
 if (autoTSettings.autohousing.enabled == 1) {
-	var ghousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
-	for (ghouse in ghousing) {
-		var gbuilding = game.buildings[ghousing[ghouse]];
-		var gcost = 0;
-		gcost += getBuildingItemPrice(gbuilding, "gems");
-		var gratio = gcost / gbuilding.increase.by;
-		gobj[ghousing[ghouse]] = gratio;
-		if (document.getElementById(ghousing[ghouse]).style.border = "1px solid #00CC00") {
-			document.getElementById(ghousing[ghouse]).style.border = "1px solid #FFFFFF";
+	var ahousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
+	var ghousing = [];
+	for (ahouse in ahousing) {
+		if (game.buildings[ahousing[ahouse]].locked == 0) {
+			ghousing.push(ahousing[ahouse]);
 		}
 	}
-	var keysSorted = Object.keys(gobj).sort(function(a,b){return gobj[a]-gobj[b]});
-	document.getElementById(keysSorted[0]).style.border = "1px solid #00CC00";
+	if (ghousing.length) {
+		for (ghouse in ghousing) {
+			var gbuilding = game.buildings[ghousing[ghouse]];
+			var gcost = 0;
+			gcost += getBuildingItemPrice(gbuilding, "gems");
+			var gratio = gcost / gbuilding.increase.by;
+			gobj[ghousing[ghouse]] = gratio;
+			if (document.getElementById(ghousing[ghouse]).style.border = "1px solid #00CC00") {
+				document.getElementById(ghousing[ghouse]).style.border = "1px solid #FFFFFF";
+			}
+		}
+		var keysSorted = Object.keys(gobj).sort(function(a,b){return gobj[a]-gobj[b]});
+		document.getElementById(keysSorted[0]).style.border = "1px solid #00CC00";
+	}
 } else {
 	var ghousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
 	for (ghouse in ghousing) {
