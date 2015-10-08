@@ -40,7 +40,7 @@ var autogyms = {enabled: 0, description: "Automatically buy gyms when we can aff
 var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 var autoTSettings = {autobuildings, autotributes, autogyms, autoupgrades, autohousing, autoformations};
 
-//add buttons
+//add buttonss
 var autosettings = document.getElementById("autosettings0");
 var html = "";
 for (var item in autoTSettings) {
