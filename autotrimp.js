@@ -134,7 +134,7 @@ if (autoTSettings.autobuildings.enabled == 1) {
 
 //Buy tributes
 if (autoTSettings.autotributes.enabled == 1) {
-	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned) {
+	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned && game.buildings.Tribute.locked == 0) {
 		buyBuilding('Tribute');
 		message("Bought us a tribute. The gems must flow!", "Loot", "*eye2", "exotic")
 	}
@@ -143,7 +143,7 @@ if (autoTSettings.autotributes.enabled == 1) {
 //Buy gyms
 
 if (autoTSettings.autogyms.enabled == 1) {
-	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned) {
+	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned && game.buildings.Gym.locked == 0) {
 		buyBuilding('Gym');
 		message("Bought us a gym. Open 24/7.", "Loot", "*eye2", "exotic")
 	}
