@@ -207,10 +207,18 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 
 function newTimer() {
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
-		if (game.badGuys[game.global.gridArray[game.global.lastClearedCell + 1].name].fast) {
-			if (game.global.formation == 2) {setFormation(1);}
+		if (game.global.mapsActive){
+			if (game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast) {
+				if (game.global.formation == 2) {setFormation(1);}
+			} else {
+				if (game.global.formation == 1) {setFormation(2);}
+			}
 		} else {
-			if (game.global.formation == 1) {setFormation(2);}
-		}		
+			if (game.badGuys[game.global.gridArray[game.global.lastClearedCell + 1].name].fast) {
+				if (game.global.formation == 2) {setFormation(1);}
+			} else {
+				if (game.global.formation == 1) {setFormation(2);}
+			}
+		}
 	}
 }//end new loop
