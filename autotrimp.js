@@ -173,9 +173,17 @@ if (autoTSettings.autohousing.enabled == 1) {
 		document.getElementById(keysSorted[0]).style.border = "1px solid #00CC00";
 	}
 } else {
-	var ghousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
+	var ahousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
+	var ghousing = [];
+	for (ahouse in ahousing) {
+		if (game.buildings[ahousing[ahouse]].locked == 0) {
+			ghousing.push(ahousing[ahouse]);
+		}
+	}
 	for (ghouse in ghousing) {
-		document.getElementById(ghousing[ghouse]).style.border = "1px solid #FFFFFF";
+		if (document.getElementById(ghousing[ghouse]).style.border = "1px solid #00CC00") {
+			document.getElementById(ghousing[ghouse]).style.border = "1px solid #FFFFFF";
+		}
 	}
 }
 
@@ -186,8 +194,12 @@ if (autoTSettings.autoupgrades.enabled == 1) {
   for (var key in game.upgrades) {
     if (autotrimpupgrades.indexOf(key) != -1) { 
       if (game.upgrades[key].allowed > game.upgrades[key].done) {
-        buyUpgrade(key);
-        message("Read the trimps the " + key + " book. Only some of them listened.", "Loot", "*eye2", "exotic")
+      	buyUpgrade(key);
+        if (key == "Efficiency") {
+        	message("Read you the " + key + " book while you were asleep.", "Loot", "*eye2", "exotic")
+        } else {
+        	message("Read the trimps the " + key + " book. Only some of them listened.", "Loot", "*eye2", "exotic")
+        }
       }
     }
   }
