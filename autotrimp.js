@@ -112,9 +112,9 @@ function talk() {
 }
 
 function myTimer() {
-  var food = game.resources.food.owned / game.resources.food.max;
-  var wood = game.resources.wood.owned / game.resources.wood.max;
-  var metal = game.resources.metal.owned / game.resources.metal.max;
+  var food = game.resources.food.owned / (game.resources.food.max + (game.resources.food.max * game.portal.Packrat.modifier * game.portal.Packrat.level));
+  var wood = game.resources.wood.owned / (game.resources.wood.max + (game.resources.wood.max * game.portal.Packrat.modifier * game.portal.Packrat.level));
+  var metal = game.resources.metal.owned / (game.resources.metal.max + (game.resources.metal.max * game.portal.Packrat.modifier * game.portal.Packrat.level));
 
 //Buy resource buildings
 if (autoTSettings.autobuildings.enabled == 1) {
