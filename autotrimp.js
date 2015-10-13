@@ -196,7 +196,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
       if (game.upgrades[key].allowed > game.upgrades[key].done) {
       	buyUpgrade(key);
         if (key == "Efficiency") {
-        	message("Read you the " + key + " book while you were asleep.", "Loot", "*eye2", "exotic")
+        	message("I read you the " + key + " book while you were asleep. I think it worked.", "Loot", "*eye2", "exotic")
         } else {
         	message("Read the trimps the " + key + " book. Only some of them listened.", "Loot", "*eye2", "exotic")
         }
