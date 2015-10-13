@@ -193,7 +193,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
   autotrimpupgrades = ["Egg", "UberHut", "UberHouse", "UberMansion", "UberHotel", "UberResort", "Bounty", "Efficiency", "TrainTacular", "Gymystic", "Megascience", "Megaminer", "Megalumber", "Megafarming", "Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
   for (var key in game.upgrades) {
     if (autotrimpupgrades.indexOf(key) != -1) { 
-      if (game.upgrades[key].allowed > game.upgrades[key].done) {
+      if (game.upgrades[key].allowed > game.upgrades[key].done && canAffordTwoLevel(game.upgrades[key])) {
       	buyUpgrade(key);
         if (key == "Efficiency") {
         	message("I read you the " + key + " book while you were asleep. I think it worked.", "Loot", "*eye2", "exotic")
