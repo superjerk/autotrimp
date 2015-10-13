@@ -1,4 +1,4 @@
-//Old load notification
+//Old load notifications
 //document.getElementById("food").appendChild(document.createTextNode("*"));
 
 //Line things up, OCD FTW!
