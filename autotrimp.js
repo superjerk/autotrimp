@@ -114,10 +114,12 @@ function updateHousingHighlighting() {
 			gobj[ghousing[ghouse]] = gratio;
 			if (document.getElementById(ghousing[ghouse]).style.border = "1px solid #00CC00") {
 				document.getElementById(ghousing[ghouse]).style.border = "1px solid #FFFFFF";
+				document.getElementById(ghousing[ghouse]).removeEventListener("click", updateHousingHighlighting);
 			}
 		}
 		var keysSorted = Object.keys(gobj).sort(function(a,b){return gobj[a]-gobj[b]});
 		document.getElementById(keysSorted[0]).style.border = "1px solid #00CC00";
+		document.getElementById(keysSorted[0]).addEventListener('click',updateHousingHighlighting,false);
 	}
 }
 
