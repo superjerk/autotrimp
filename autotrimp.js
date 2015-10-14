@@ -9,6 +9,7 @@ document.getElementById("boneFlavorRow").innerHTML = "The Bone Trader trades bon
 
 //Setup bone number addition
 document.getElementById("boneBtnMain").style = "font-size: 1vw;";
+document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global.b + ")";
 
 //setup talk button
 document.getElementById("buildingsQueue").style = "width: 75%; float: left;";
