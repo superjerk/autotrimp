@@ -40,10 +40,11 @@ updateConvo(0);
 var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
 var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
+var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
 var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
 var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
 var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
-var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoformations: autoformations};
+var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autoformations: autoformations};
 
 //add buttonss
 var autosettings = document.getElementById("autosettings0");
@@ -66,6 +67,8 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 var myVar=setInterval(function () {myTimer()}, 10000);
 var newVar=setInterval(function () {newTimer()}, 2000);
 var gobj = {};
+var hobj = {};
+var aobj = {};
 //alert("done");
 
 //only functions below here
@@ -120,6 +123,58 @@ function updateHousingHighlighting() {
 		var keysSorted = Object.keys(gobj).sort(function(a,b){return gobj[a]-gobj[b]});
 		document.getElementById(keysSorted[0]).style.border = "1px solid #00CC00";
 		document.getElementById(keysSorted[0]).addEventListener('click',updateHousingHighlighting,false);
+	}
+}
+
+function updateHealthHighlighting() {
+	var ahealth = ["Boots", "Helmet", "Pants", "Shoulderguards", "Breastplate"];
+	var ghealth = [];
+	for (aheal in ahealth) {
+		if (game.equipment[ahealth[aheal]].locked == 0) {
+			ghealth.push(ahealth[aheal]);
+		}
+	}
+	if (ghealth.length) {
+		for (gheal in ghealth) {
+			var hequip = game.equipment[ghealth[gheal]];
+			var mcost = 0;
+			mcost += getBuildingItemPrice(hequip, "metal", true);
+			var mratio = mcost / hequip.healthCalculated;
+			hobj[ghealth[gheal]] = mratio;
+			if (document.getElementById(ghealth[gheal]).style.border = "1px solid #0000FF") {
+				document.getElementById(ghealth[gheal]).style.border = "1px solid #FFFFFF";
+				document.getElementById(ghealth[gheal]).removeEventListener("click", updateHealthHighlighting);
+			}
+		}
+		var hkeysSorted = Object.keys(hobj).sort(function(a,b){return hobj[a]-hobj[b]});
+		document.getElementById(hkeysSorted[0]).style.border = "1px solid #0000FF";
+		document.getElementById(hkeysSorted[0]).addEventListener('click',updateHealthHighlighting,false);
+	}
+}
+
+function updateAttackHighlighting() {
+	var aAttacking = ["Dagger", "Mace", "Polearm", "Battleaxe", "Greatsword"];
+	var gAttacking = [];
+	for (aAttack in aAttacking) {
+		if (game.equipment[aAttacking[aAttack]].locked == 0) {
+			gAttacking.push(aAttacking[aAttack]);
+		}
+	}
+	if (gAttacking.length) {
+		for (gAttack in gAttacking) {
+			var aequip = game.equipment[gAttacking[gAttack]];
+			var mcost = 0;
+			mcost += getBuildingItemPrice(aequip, "metal", true);
+			var mratio = mcost / aequip.attackCalculated;
+			aobj[gAttacking[gAttack]] = mratio;
+			if (document.getElementById(gAttacking[gAttack]).style.border = "1px solid #FF0000") {
+				document.getElementById(gAttacking[gAttack]).style.border = "1px solid #FFFFFF";
+				document.getElementById(gAttacking[gAttack]).removeEventListener("click", updateAttackHighlighting);
+			}
+		}
+		var akeysSorted = Object.keys(aobj).sort(function(a,b){return aobj[a]-aobj[b]});
+		document.getElementById(akeysSorted[0]).style.border = "1px solid #FF0000";
+		document.getElementById(akeysSorted[0]).addEventListener('click',updateAttackHighlighting,false);
 	}
 }
 
@@ -194,6 +249,41 @@ if (autoTSettings.autohousing.enabled == 1) {
 	for (ghouse in ghousing) {
 		if (document.getElementById(ghousing[ghouse]).style.border = "1px solid #00CC00") {
 			document.getElementById(ghousing[ghouse]).style.border = "1px solid #FFFFFF";
+			document.getElementById(ghousing[ghouse]).removeEventListener("click", updateHousingHighlighting);
+		}
+	}
+}
+
+if (autoTSettings.autoequipment.enabled == 1) {
+	updateHealthHighlighting();
+	updateAttackHighlighting();
+} else {
+	var aAttacking = ["Dagger", "Mace", "Polearm", "Battleaxe", "Greatsword"];
+	var gAttacking = [];
+	for (aAttack in aAttacking) {
+		if (game.equipment[aAttacking[aAttack]].locked == 0) {
+			gAttacking.push(aAttacking[aAttack]);
+		}
+	}
+	for (gAttack in gAttacking) {
+		if (document.getElementById(gAttacking[gAttack]).style.border = "1px solid #FF0000") {
+			document.getElementById(gAttacking[gAttack]).style.border = "1px solid #FFFFFF";
+			document.getElementById(gAttacking[gAttack]).removeEventListener("click", updateAttackHighlighting);
+		}
+	}
+	var ahealth = ["Boots", "Helmet", "Pants", "Shoulderguards", "Breastplate"];
+	var ghealth = [];
+	for (aheal in ahealth) {
+		if (game.equipment[ahealth[aheal]].locked == 0) {
+			ghealth.push(ahealth[aheal]);
+		}
+	}
+	if (ghealth.length) {
+		for (gheal in ghealth) {
+			if (document.getElementById(ghealth[gheal]).style.border = "1px solid #0000FF") {
+				document.getElementById(ghealth[gheal]).style.border = "1px solid #FFFFFF";
+				document.getElementById(ghealth[gheal]).removeEventListener("click", updateHealthHighlighting);
+			}
 		}
 	}
 }
