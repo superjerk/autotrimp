@@ -43,7 +43,7 @@ var autohousing = {enabled: 0, description: "Highlight the most gem-efficient ho
 var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
 var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
 var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
-var autoTSettings = {autobuildings, autotributes, autogyms, autoupgrades, autohousing, autoformations};
+var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoformations: autoformations};
 
 //add buttonss
 var autosettings = document.getElementById("autosettings0");
