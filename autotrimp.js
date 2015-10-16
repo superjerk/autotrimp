@@ -54,7 +54,7 @@ var autoequipment = {enabled: 0, description: "Highlight the most metal-efficien
 var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
 var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
 var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
-var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoformations: autoformations};
+var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autoformations: autoformations};
 
 //add buttonss
 var autosettings = document.getElementById("autosettings0");
