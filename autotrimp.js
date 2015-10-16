@@ -1,6 +1,12 @@
 //Old load notifications
 //document.getElementById("food").appendChild(document.createTextNode("*"));
 
+//globals-why weren't they here earlier?
+var gobj = {};
+var hobj = {};
+var aobj = {};
+var premapscounter = 0;
+
 //Line things up, OCD FTW!
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
 //fixed !!document.getElementById("rightCol").style.paddingLeft = ".3%";
@@ -38,13 +44,14 @@ updateConvo(0);
 
 //setup options
 var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
+var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
+var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
 var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
 var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
 var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
-var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
-var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
+var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
 var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
-var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autoformations: autoformations};
+var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoformations: autoformations};
 
 //add buttonss
 var autosettings = document.getElementById("autosettings0");
@@ -66,9 +73,7 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 10000);
 var newVar=setInterval(function () {newTimer()}, 2000);
-var gobj = {};
-var hobj = {};
-var aobj = {};
+
 //alert("done");
 
 //only functions below here
@@ -224,6 +229,26 @@ if (autoTSettings.autotributes.enabled == 1) {
 		buyBuilding('Tribute');
 		message("Bought us a tribute. The gems must flow!", "Loot", "*eye2", "exotic")
 	}
+}
+
+if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
+	switch (premapscounter) {
+		case 0:
+			premapscounter += 1;
+			break;
+		case 1:
+			premapscounter += 1;
+			break;
+		case 2:
+			premapscounter += 1;
+			break;
+		case 3:
+			premapscounter = 0;
+			mapsClicked();
+			break;
+	}
+} else {
+	premapscounter = 0;
 }
 
 //Buy gyms
