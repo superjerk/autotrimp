@@ -6,6 +6,7 @@ var gobj = {};
 var hobj = {};
 var aobj = {};
 var premapscounter = 0;
+var buildcounter = 0;
 
 //Line things up, OCD FTW!
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
@@ -34,12 +35,13 @@ conversation[3] = {Q:"I figured you'd find me eventually. Before you ask...yes, 
 conversation[4] = {Q:"Not much more than you, unfortunately. Whatever brought you here is also what made me...smarter than the average trimp. Before you got here, I wasn't anymore self-aware than any other trimp.",R1:"What are we doing here?",L1:5};
 conversation[5] = {Q:"I don't know--I don't even know where <b>here</b> is. This is all new to me too.",R1:"Well, what do you suggest we do?",L1:6};
 conversation[6] = {Q:"Keep going. Maybe we'll find some answers. Since we're friends now, I've picked up a few tricks that will help us.",R1:"Like what?",L1:7};
-conversation[7] = {Q:"I can tell the trimps to build storage buildings before they get full. I can also buy Gyms and Tributes as soon as we can afford them, and read some upgrade books to the trimps when you're not available.",R1:"Which upgrade books?",L1:8, R2:"What else?", L2:9};
+conversation[7] = {Q:"I can tell the trimps to build storage buildings before they get full. I can also buy Gyms and Tributes as soon as we can afford them, and read some upgrade books to you and the trimps when you're not available.",R1:"Which upgrade books?",L1:8, R2:"What else?", L2:9};
 conversation[8] = {Q:"The upgrades I can read are: Speedfarming, Speedlumber, Speedminer, Speedscience, (all the Mega versions too), Efficiency, TrainTacular, Gymystic, Potency, Egg, UberHut, UberHouse, UberMansion, UberHotel, UberResort, and Bounty",R1:"Ok, cool",L1:9};
-conversation[9] = {Q:"I can also highlight the housing that makes the most use of our gems, and I can <b>unteach</b> Shieldblock.",R1:"Why unteach Shieldblock?",L1:10, R2:"Anything else?",L2:11};
-conversation[10] = {Q:"As we learn more and more Gymystic, our shields becomes less and less useful for blocking. The extra health comes in real handy post z60.",R1:"I get it.",L1:11};
-conversation[11] = {Q:"I can help you respec the portal perks if you've already done it this round, and I can automatically flip between Dominance and Heap formations depending on the enemy we're facing.",R1:"Ok.",L1:12};
-conversation[12] = {Q:"That's it for now, but I'll let you know if I pick up any more tricks. Use the buttons below to let me know what you'd like done.",R1:"Ok.",L1:2};
+conversation[9] = {Q:"I can also highlight the housing that makes the most use of our gems, and the equipment that makes the best use of our metal.",R1:"Cool, what else?",L1:10};
+conversation[10] = {Q:"I'll bring us back to the world if we idle on the premap screen too long and I'll send you back to science-ing if you stay building on an empty queue. I can also <b>unteach</b> Shieldblock.",R1:"Why unteach Shieldblock?",L1:11, R2:"Anything else?",L2:12};
+conversation[11] = {Q:"As we learn more and more Gymystic, our shields becomes less and less useful for blocking. The extra health comes in real handy post z60.",R1:"I get it.",L1:12};
+conversation[12] = {Q:"I can help you respec the portal perks if you've already done it this round, and I can automatically flip between Dominance and Heap formations depending on the enemy we're facing.",R1:"Ok.",L1:13};
+conversation[13] = {Q:"That's it for now, but I'll let you know if I pick up any more tricks. Use the buttons below to let me know what you'd like done.",R1:"Ok.",L1:2};
 updateConvo(0);
 
 //setup options
@@ -50,6 +52,7 @@ var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade
 var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
 var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
 var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
+var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
 var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoformations: autoformations};
 
@@ -231,6 +234,7 @@ if (autoTSettings.autotributes.enabled == 1) {
 	}
 }
 
+//check to see if we're stuck in premap screen
 if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
 	switch (premapscounter) {
 		case 0:
@@ -249,6 +253,27 @@ if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
 	}
 } else {
 	premapscounter = 0;
+}
+
+//check to see if we're building on an empty queue
+if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue').style.display == "block") {
+	switch (buildcounter) {
+		case 0:
+			buildcounter += 1;
+			break;
+		case 1:
+			buildcounter += 1;
+			break;
+		case 2:
+			buildcounter += 1;
+			break;
+		case 3:
+			buildcounter = 0;
+			setGather('science');
+			break;
+	}
+} else {
+	buildcounter = 0;
 }
 
 //Buy gyms
