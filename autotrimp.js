@@ -269,7 +269,9 @@ if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue')
 			break;
 		case 3:
 			buildcounter = 0;
-			setGather('science');
+			if (game.global.challengeActive != 'Scientist') {
+				setGather('science');
+			}
 			break;
 	}
 } else {
