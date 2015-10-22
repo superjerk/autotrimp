@@ -373,6 +373,11 @@ document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global
   //clearInterval(myVar);
 }//end loop
 
+function canAffordCoordinationTrimps(){
+	var compare = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
+	return (game.resources.trimps.realMax() >= (compare * 3))
+}
+
 function newTimer() {
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
 		if (game.global.mapsActive){
