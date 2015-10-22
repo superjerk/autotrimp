@@ -360,7 +360,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 //Buy coordination
 
   if (game.upgrades.Coordination.allowed > game.upgrades.Coordination.done) {
-    if canAffordCoordinationTrimps() {
+    if (canAffordCoordinationTrimps()){
       buyUpgrade('Coordination');
       message("We read Coordination together before bedtime, it was sweet. Now let's go kill something.", "Loot", "*eye2", "exotic")
     }
