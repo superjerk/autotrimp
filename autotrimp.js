@@ -399,11 +399,11 @@ if (removebadge) {
 localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 
 //check for portal/reset
-for (j=1; j<3; j++) {
+for (j=1; j<4; j++) {
 	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf('green shimmer') != -1) {
 		for (item in autoTSettings) {
-			if (item != "versioning") {
-				item.enabled = 0;	
+			if (item != "versioning" && autoTSettings[item].enabled == 1) {
+				toggleAutoSetting(item);
 			}
 		}
 	}
