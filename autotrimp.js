@@ -398,6 +398,17 @@ if (removebadge) {
 //save
 localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 
+//check for portal/reset
+for (j=1; j<3; j++) {
+	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf('green shimmer') != -1) {
+		for (item in autoTSettings) {
+			if (item != "versioning") {
+				item.enabled = 0;	
+			}
+		}
+	}
+}
+
   //clearInterval(myVar);
 }//end loop
 
