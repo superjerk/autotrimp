@@ -214,14 +214,17 @@ function myTimer() {
 if (autoTSettings.autobuildings.enabled == 1) {
   if (food > .9) {
     buyBuilding('Barn');
+    tooltip("hide");
     message("Bought us another barn. It's red...hooray.", "Loot", "*eye2", "exotic");
   }
   if (wood > .9) {
     buyBuilding('Shed');
+    tooltip("hide");
     message("Bought us another shed. It's very shed-like", "Loot", "*eye2", "exotic");
   }
   if (metal > .9) {
     buyBuilding('Forge');
+    tooltip("hide");
     message("Bought us another forge. It's a good forge.", "Loot", "*eye2", "exotic")
   }
 }
@@ -230,6 +233,7 @@ if (autoTSettings.autobuildings.enabled == 1) {
 if (autoTSettings.autotributes.enabled == 1) {
 	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned && game.buildings.Tribute.locked == 0) {
 		buyBuilding('Tribute');
+		tooltip("hide");
 		message("Bought us a tribute. The gems must flow!", "Loot", "*eye2", "exotic")
 	}
 }
@@ -283,6 +287,7 @@ if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue')
 if (autoTSettings.autogyms.enabled == 1) {
 	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned && game.buildings.Gym.locked == 0) {
 		buyBuilding('Gym');
+		tooltip("hide");
 		message("Bought us a gym. Open 24/7.", "Loot", "*eye2", "exotic")
 	}
 }
