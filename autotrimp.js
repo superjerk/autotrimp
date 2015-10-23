@@ -375,6 +375,17 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 //Update bones
 document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global.b + ")";
 
+//remove alerts if they exist
+var removebadge = true;
+var badgeupgrades = document.getElementById("upgradesHere");
+for (i = 0; i<badgeupgrades.childNodes.length; i++) { 
+	if (badgeupgrades.childNodes[i].childNodes[0].innerHTML == "!") {
+		removebadge = false;
+	}
+}
+if (removebadge) {
+	document.getElementById("upgradesAlert").innerHTML = "";
+}
   //clearInterval(myVar);
 }//end loop
 
