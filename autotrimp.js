@@ -360,7 +360,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 //Buy coordination
 
   if (game.upgrades.Coordination.allowed > game.upgrades.Coordination.done) {
-    if ((game.resources.trimps.realMax() > (game.resources.trimps.maxSoldiers * 3))) {
+    if (canAffordCoordinationTrimps()){
       buyUpgrade('Coordination');
       message("We read Coordination together before bedtime, it was sweet. Now let's go kill something.", "Loot", "*eye2", "exotic")
     }
@@ -372,6 +372,11 @@ document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global
 
   //clearInterval(myVar);
 }//end loop
+
+function canAffordCoordinationTrimps(){
+	var compare = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
+	return (game.resources.trimps.realMax() >= (compare * 3))
+}
 
 function newTimer() {
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
