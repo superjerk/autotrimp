@@ -7,6 +7,7 @@ var hobj = {};
 var aobj = {};
 var premapscounter = 0;
 var buildcounter = 0;
+var autoTSettings = {};
 var version = "0.3b";
 
 //Line things up, OCD FTW!
@@ -46,29 +47,35 @@ conversation[13] = {Q:"That's it for now, but I'll let you know if I pick up any
 updateConvo(0);
 
 //setup options
-var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
-var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
-var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
-var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
-var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
-var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
-var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
-var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
-var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
-var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autoformations: autoformations};
+var checking = JSON.parse(localStorage.getItem("autotrimpsave"))
+if (checking != null && checking.versioning == version) {
+	autoTSettings = checking;	
+}
+else {
+	var versioning = {version: "0.3b"};
+	var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
+	var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
+	var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
+	var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
+	var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
+	var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
+	var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
+	var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
+	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
+	autoTSettings = {versioning: version, autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autoformations: autoformations};
+}
 
 //add buttonss
 var autosettings = document.getElementById("autosettings0");
 var html = "";
 for (var item in autoTSettings) {
-  var optionItem = autoTSettings[item]; 
-  var text = optionItem.titles[optionItem.enabled]; 
-  html += "<div class='optionContainer'><div id='toggle" + item + "' class='noselect settingBtn settingBtn" + optionItem.enabled + "' onclick='toggleAutoSetting(\"" + item + "\")'>" + text + "</div><div class='optionItemDescription'>" + optionItem.description + "</div></div> ";}
+	if (item != "versioning") {
+		var optionItem = autoTSettings[item]; 
+  		var text = optionItem.titles[optionItem.enabled]; 
+  		html += "<div class='optionContainer'><div id='toggle" + item + "' class='noselect settingBtn settingBtn" + optionItem.enabled + "' onclick='toggleAutoSetting(\"" + item + "\")'>" + text + "</div><div class='optionItemDescription'>" + optionItem.description + "</div></div> ";
+	}
+}
 autosettings.innerHTML = html;
-
-//setup default settings
-toggleAutoSetting("autobuildings");
-//toggleAutoSetting("autoupgrades");
 
 //create unlearn shieldblock button
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn btn-warning' onclick='removeShieldblock()'>Unlearn Shieldblock</div><div class='optionItemDescription'>We'll stop teaching the trimps to use shields to block and we'll use them for health again</div></div>");
@@ -387,6 +394,10 @@ for (i = 0; i<badgeupgrades.childNodes.length; i++) {
 if (removebadge) {
 	document.getElementById("upgradesAlert").innerHTML = "";
 }
+
+//save
+localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
+
   //clearInterval(myVar);
 }//end loop
 
