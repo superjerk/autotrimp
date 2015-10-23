@@ -7,6 +7,7 @@ var hobj = {};
 var aobj = {};
 var premapscounter = 0;
 var buildcounter = 0;
+var version = "0.3b";
 
 //Line things up, OCD FTW!
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
