@@ -5,6 +5,7 @@
 var gobj = {};
 var hobj = {};
 var aobj = {};
+var besthealth = "";
 var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
@@ -170,6 +171,7 @@ function updateHealthHighlighting() {
 		var hkeysSorted = Object.keys(hobj).sort(function(a,b){return hobj[a]-hobj[b]});
 		document.getElementById(hkeysSorted[0]).style.border = "1px solid #0000FF";
 		document.getElementById(hkeysSorted[0]).addEventListener('click',updateHealthHighlighting,false);
+		besthealth = hkeysSorted[0];
 	}
 }
 
