@@ -67,7 +67,7 @@ else {
 	var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
 	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 	var autosnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
-	autoTSettings = {versioning: version, autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autosnimps: autosnimps, autoformations: autoformations};
+	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autosnimps: autosnimps, autoformations: autoformations};
 }
 
 //add buttonss
