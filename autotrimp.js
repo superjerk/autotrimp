@@ -8,7 +8,7 @@ var aobj = {};
 var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
-var version = "0.3b";
+var version = "0.31b";
 
 //Line things up, OCD FTW!
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
@@ -52,7 +52,7 @@ if (checking != null && checking.versioning == version) {
 	autoTSettings = checking;	
 }
 else {
-	var versioning = {version: "0.3b"};
+	var versioning = {version: "0.31b"};
 	var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 	var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
 	var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
