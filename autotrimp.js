@@ -5,7 +5,7 @@
 var gobj = {};
 var hobj = {};
 var aobj = {};
-var besthealth = "";
+var hkeysSorted = [];
 var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
@@ -168,10 +168,9 @@ function updateHealthHighlighting() {
 				document.getElementById(ghealth[gheal]).removeEventListener("click", updateHealthHighlighting);
 			}
 		}
-		var hkeysSorted = Object.keys(hobj).sort(function(a,b){return hobj[a]-hobj[b]});
+		hkeysSorted = Object.keys(hobj).sort(function(a,b){return hobj[a]-hobj[b]});
 		document.getElementById(hkeysSorted[0]).style.border = "1px solid #0000FF";
 		document.getElementById(hkeysSorted[0]).addEventListener('click',updateHealthHighlighting,false);
-		besthealth = hkeysSorted[0];
 	}
 }
 
@@ -473,7 +472,7 @@ function newTimer() {
 		testhealth = myhealth;
 		testattack = badguyMinAtt;
 		if (badguyMinAtt > (myblock + myhealth)) {
-			message("You're stuck on a fastenemy. I would fix this by buying a " + besthealth + ".", "Loot", "*eye2", "exotic")	
+			message("You're stuck on a fastenemy. I would fix this by buying a " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
 }//end new loop
