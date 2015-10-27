@@ -473,7 +473,7 @@ function newTimer() {
 		testhealth = myhealth;
 		testattack = badguyMinAtt;
 		if (badguyMinAtt > (myblock + myhealth)) {
-			message("You're stuck on a fastenemy. I'm going to learn to fix this soon.", "Loot", "*eye2", "exotic")	
+			message("You're stuck on a fastenemy. I would fix this by buying a " + besthealth + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
 }//end new loop
