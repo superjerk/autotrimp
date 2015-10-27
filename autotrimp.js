@@ -205,7 +205,7 @@ function toggleAutoSetting(setting){
 	if (toggles == 2)	autoOption.enabled = (autoOption.enabled) ? 0 : 1;
 	else {
 		autoOption.enabled++;
-		if (autoOption.enabled >= toggles) menuOption.enabled = 0;
+		if (autoOption.enabled >= toggles) autoOption.enabled = 0;
 	}
 	if (autoOption.onToggle) autoOption.onToggle();
 	var menuElem = document.getElementById("toggle" + setting);
