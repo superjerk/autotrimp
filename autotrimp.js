@@ -440,7 +440,7 @@ function newTimer() {
 			//game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast
 		}
 		var mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
-		var toughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
+		var mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
 		var blockformation = 1;
 		var healthformation = 1;
 		switch (game.global.formation) {
@@ -457,7 +457,7 @@ function newTimer() {
 				blockformation = 4;
 			break;
 		}
-		var myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * soldiers * blockformation;
-		var myhealth = game.global.health * soldiers * toughness * healthformation;
+		var myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * mysoldiers * blockformation;
+		var myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
 	}
 }//end new loop
