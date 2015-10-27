@@ -57,8 +57,9 @@ if (checking != null && checking.versioning == version) {
 else {
 	var versioning = {version: version};
 	var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
-	var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
-	var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
+//	var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
+//	var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
+	var autogymbutes = {enabled: 0, description: "Automatically buy gyms and tributes when we can afford them", titles: ["Not Buying", "Buying Both", "Gyms Only", "Tributes Only"]};
 	var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
 	var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
 	var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
@@ -242,7 +243,7 @@ if (autoTSettings.autobuildings.enabled == 1) {
 }
 
 //Buy tributes
-if (autoTSettings.autotributes.enabled == 1) {
+if (autoTSettings.autogymbutes.enabled == 1 || autoTSettings.autogymbutes.enabled == 3) {
 	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned && game.buildings.Tribute.locked == 0) {
 		buyBuilding('Tribute');
 		tooltip("hide");
@@ -296,7 +297,7 @@ if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue')
 
 //Buy gyms
 
-if (autoTSettings.autogyms.enabled == 1) {
+if (autoTSettings.autogymbutes.enabled == 1 || autoTSettings.autogymbutes.enabled == 2) {
 	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned && game.buildings.Gym.locked == 0) {
 		buyBuilding('Gym');
 		tooltip("hide");
@@ -441,9 +442,9 @@ function newTimer() {
 		if (autoTSettings.autoequipment.enabled != 1) {
 			toggleAutoSetting(autoequipment);
 		}
-		var badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .8;
+		var badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .805; //fudge factor
 		if (game.global.mapsActive){
-			badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .8;
+			badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .805;
 			//game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast
 		}
 		var mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
@@ -469,5 +470,8 @@ function newTimer() {
 		testblock = myblock;
 		testhealth = myhealth;
 		testattack = badguyMinAtt;
+		if (badguyMinAtt > (myblock + myhealth)) {
+			message("You're stuck on a fastenemy. I'm going to learn to fix this soon.", "Loot", "*eye2", "exotic")	
+		}
 	}
 }//end new loop
