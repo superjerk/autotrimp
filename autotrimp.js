@@ -62,7 +62,8 @@ else {
 	var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
 	var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
 	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
-	autoTSettings = {versioning: version, autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autoformations: autoformations};
+	var avoidsnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
+	autoTSettings = {versioning: version, autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autosnimps: autosnimps, autoformations: autoformations};
 }
 
 //add buttonss
@@ -353,7 +354,6 @@ if (autoTSettings.autoequipment.enabled == 1) {
 	}
 }
 
-
 //Buy speed upgrades
 if (autoTSettings.autoupgrades.enabled == 1) {
   autotrimpupgrades = ["Egg", "UberHut", "UberHouse", "UberMansion", "UberHotel", "UberResort", "Bounty", "Efficiency", "TrainTacular", "Gymystic", "Megascience", "Megaminer", "Megalumber", "Megafarming", "Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
@@ -427,5 +427,37 @@ function newTimer() {
 				if (game.global.formation == 1) {setFormation(2);}
 			}
 		}
+	}
+	
+	//avoid snimps
+	if (autoTSettings.autosnimps.enabled == 1) {
+		if (autoTSettings.autoequipment.enabled != 1) {
+			toggleAutoSetting(autoequipment);
+		}
+		var badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .8;
+		if (game.global.mapsActive){
+			badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .8;
+			//game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast
+		}
+		var mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
+		var toughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
+		var blockformation = 1;
+		var healthformation = 1;
+		switch (game.global.formation) {
+			case 1:
+				healthformation = 4;
+				blockformation = .5;
+			break;
+			case 2:
+				healthformation = .5;
+				blockformation = .5;
+			break;
+			case 3:
+				healthformation = .5;
+				blockformation = 4;
+			break;
+		}
+		var myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * soldiers * blockformation;
+		var myhealth = game.global.health * soldiers * toughness * healthformation;
 	}
 }//end new loop
