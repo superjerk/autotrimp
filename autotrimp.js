@@ -402,8 +402,9 @@ if (removebadge) {
 localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 
 //check for portal/reset
-var loglength = (log.childElementCount % 4) + 1;
-for (j=1; j <= loglength; j++) {
+var loglength = log.childElementCount;
+if (loglength > 4) {loglength = 4;}
+for (j=1; j < loglength; j++) {
 	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf('green shimmer') != -1) {
 		for (item in autoTSettings) {
 			if (item != "versioning") {
