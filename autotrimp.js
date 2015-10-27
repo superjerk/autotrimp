@@ -83,8 +83,8 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='add Respec' class='noselect settingBtn btn-warning' onclick='addRespec()'>Add a Respec</div><div class='optionItemDescription'>If you've already used your respec but want to do it again anyway, let me know.</div></div>");
 
 //call loop
-var myVar=setInterval(function () {myTimer()}, 10000);
-var newVar=setInterval(function () {newTimer()}, 2000);
+var myVar=setInterval(function () {myTimer()}, 7000);
+var newVar=setInterval(function () {newTimer()}, 1500);
 
 //alert("done");
 
