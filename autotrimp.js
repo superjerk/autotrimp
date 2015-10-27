@@ -9,6 +9,9 @@ var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
 var version = "0.32b";
+var testhealth = 0;
+var testblock = 0;
+var testattack = 0;
 
 //Line things up, OCD FTW!
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
@@ -399,7 +402,8 @@ if (removebadge) {
 localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 
 //check for portal/reset
-for (j=1; j<4; j++) {
+var loglength = (log.childElementCount % 4) + 1;
+for (j=1; j <= loglength; j++) {
 	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf('green shimmer') != -1) {
 		for (item in autoTSettings) {
 			if (item != "versioning") {
