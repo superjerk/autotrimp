@@ -402,8 +402,10 @@ localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 for (j=1; j<4; j++) {
 	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf('green shimmer') != -1) {
 		for (item in autoTSettings) {
-			if (item != "versioning" && autoTSettings[item].enabled == 1) {
-				toggleAutoSetting(item);
+			if (item != "versioning") {
+				while (autoTSettings[item].enabled != 0) {
+					toggleAutoSetting(item);
+				}
 			}
 		}
 	}
