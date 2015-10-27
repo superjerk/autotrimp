@@ -465,5 +465,8 @@ function newTimer() {
 		}
 		var myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * mysoldiers * blockformation;
 		var myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
+		testblock = myblock;
+		testhealth = myhealth;
+		testattack = badguyMinAtt;
 	}
 }//end new loop
