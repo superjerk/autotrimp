@@ -440,7 +440,7 @@ function newTimer() {
 	//avoid snimps
 	if (autoTSettings.autosnimps.enabled == 1) {
 		if (autoTSettings.autoequipment.enabled != 1) {
-			toggleAutoSetting(autoequipment);
+			toggleAutoSetting("autoequipment");
 		}
 		var badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .805; //fudge factor
 		if (game.global.mapsActive){
