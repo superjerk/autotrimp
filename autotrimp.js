@@ -35,9 +35,6 @@ document.getElementById("autotrimp").insertAdjacentHTML('beforeend', '<div style
 //Add new css rule
 document.styleSheets[2].insertRule(".settingBtn3 {background-color: #337AB7;}", 84);
 
-//setup mapbonus id
-//document.getElementById("worldNumber").insertAdjacentHTML('beforeend', '<span id="automapb"></span>');
-
 //setup convo array
 var conversation = [];
 conversation[0] = {Q:"Hello.",R1:"What?!?!",L1:3,R2:"Oh.",L2:1};
@@ -393,8 +390,10 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global.b + ")";
 
 //Update mapbonus
-//document.getElementById("automapb").innerHTML = "  (+" + prettify(game.global.mapBonus * 20) + "%)"
-
+if (game.global.mapsActive && !game.global.preMapsActive) {
+	var level = getCurrentMapObject().level;
+	document.getElementById("worldNumber").innerHTML = "<br>Lv: " + level + "  (+" + prettify(game.global.mapBonus * 20) + "%)"
+}
 //remove alerts if they exist
 var removebadge = true;
 var badgeupgrades = document.getElementById("upgradesHere");
