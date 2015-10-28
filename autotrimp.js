@@ -58,8 +58,6 @@ if (checking != null && checking.versioning == version) {
 else {
 	var versioning = {version: version};
 	var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
-//	var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
-//	var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
 	var autogymbutes = {enabled: 0, description: "Automatically buy gyms and tributes when we can afford them", titles: ["Not Buying", "Buying Both", "Gyms Only", "Tributes Only"]};
 	var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
 	var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
@@ -88,8 +86,8 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='add Respec' class='noselect settingBtn btn-warning' onclick='addRespec()'>Add a Respec</div><div class='optionItemDescription'>If you've already used your respec but want to do it again anyway, let me know.</div></div>");
 
 //call loop
-var myVar=setInterval(function () {myTimer()}, 7000);
-var newVar=setInterval(function () {newTimer()}, 1500);
+var myVar=setInterval(function () {myTimer()}, 3000);
+var newVar=setInterval(function () {newTimer()}, 1000);
 
 //alert("done");
 
