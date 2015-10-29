@@ -5,8 +5,14 @@
 var gobj = {};
 var hobj = {};
 var aobj = {};
+var hkeysSorted = [];
 var premapscounter = 0;
 var buildcounter = 0;
+var autoTSettings = {};
+var version = "0.34b";
+var testhealth = 0;
+var testblock = 0;
+var testattack = 0;
 
 //Line things up, OCD FTW!
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
@@ -25,6 +31,9 @@ document.getElementById("queueContainer").insertAdjacentHTML('beforeend', '<div 
 //setup talk window
 document.getElementById("boneWrapper").insertAdjacentHTML('beforebegin', '<div id="autotrimp" style="position: absolute; background: rgb(153, 153, 153) none repeat scroll 0% 0%; border: 2px solid rgb(0, 0, 0); width: 64vw; margin: 6vh 18vw; z-index: 10000000; text-align: center; font-size: 1.3vw; display: none; padding: 0.2vw; color: rgb(255, 255, 255);"><div style="width: 100%; display: table; border-spacing: 0.3vw;" id="autotrimp0"><div style="display: table-row;" id="autorow"><div style="border: 1px solid white; background: rgb(84, 83, 83) none repeat scroll 0% 0%; display: table-cell; width: 20%;" id="pic"><img style="max-height: 13vw;" src="https://cloud.githubusercontent.com/assets/14081390/9893516/d9db4782-5bde-11e5-8791-91638bb6aaae.jpg"></div><div id="qs" style="border: 1px solid white; background: rgb(84, 83, 83) none repeat scroll 0% 0%; display: table-cell; width: 60%; vertical-align: top; padding: 0.5%;"><p style="text-align: left; font-size: 0.9em;" id="q">This is the question.</p><p></p><p style="font-size: 0.8em;"><a style="color: rgb(124, 202, 228); text-decoration: underline;" href="#" id="1" onclick="alert(\'clicked\')">Answer 1</a></p><p style="font-size: 0.8em;"><a style="color: rgb(124, 202, 228); text-decoration: underline;" href="#" id="2" onclick="alert(\'clicked\')">Answer 2</a></p><p style="font-size: 0.8em;"><a style="color: rgb(124, 202, 228); text-decoration: underline;" href="#" id="3" onclick="alert(\'clicked\')"></a></p></div><div id="button" style="display: table-cell; width: 20%; background: rgb(153, 153, 153) none repeat scroll 0% 0%; vertical-align: top;"><div class="boneBtn dangerColor pointer noselect" onclick="document.getElementById(\'autotrimp\').style.display = \'none\'">Close</div></div></div></div></div>');
 document.getElementById("autotrimp").insertAdjacentHTML('beforeend', '<div style="width: 100%; display: table; border-spacing:0.3vw;" id="autosettings"><div style="border: 1px solid white; background: rgb(84, 83, 83) none repeat scroll 0% 0%; width: 100%; padding: .3vw;" id="autosettings0">Settings</div></div>');
+
+//Add new css rule
+document.styleSheets[2].insertRule(".settingBtn3 {background-color: #337AB7;}", 84);
 
 //setup convo array
 var conversation = [];
@@ -45,37 +54,44 @@ conversation[13] = {Q:"That's it for now, but I'll let you know if I pick up any
 updateConvo(0);
 
 //setup options
-var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
-var autotributes = {enabled: 0, description: "Automatically buy tributes when we can afford them", titles: ["Not Buying", "Buying"]};
-var autogyms = {enabled: 0, description: "Automatically buy gyms when we can afford them", titles: ["Not Buying", "Buying"]};
-var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
-var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
-var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
-var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
-var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
-var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
-var autoTSettings = {autobuildings: autobuildings, autotributes: autotributes, autogyms: autogyms, autoupgrades: autoupgrades, autohousing: autohousing, autoequipment: autoequipment, autopremaps: autopremaps, autoscience: autoscience, autoformations: autoformations};
+var checking = JSON.parse(localStorage.getItem("autotrimpsave"))
+if (checking != null && checking.versioning == version) {
+	autoTSettings = checking;	
+}
+else {
+	var versioning = {version: version};
+	var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
+	var autogymbutes = {enabled: 0, description: "Automatically buy gyms and tributes when we can afford them", titles: ["Not Buying", "Buying Both", "Gyms Only", "Tributes Only"]};
+	var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
+//	var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
+//	var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
+	var autohighlight = {enabled: 0, description: "Highlight the most gem-efficient housing in green and the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting All", "Housing Only", "Equipment Only"]};
+	var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
+	var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
+	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
+	var autosnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
+	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autoscience: autoscience, autosnimps: autosnimps, autoformations: autoformations};
+}
 
 //add buttonss
 var autosettings = document.getElementById("autosettings0");
 var html = "";
 for (var item in autoTSettings) {
-  var optionItem = autoTSettings[item]; 
-  var text = optionItem.titles[optionItem.enabled]; 
-  html += "<div class='optionContainer'><div id='toggle" + item + "' class='noselect settingBtn settingBtn" + optionItem.enabled + "' onclick='toggleAutoSetting(\"" + item + "\")'>" + text + "</div><div class='optionItemDescription'>" + optionItem.description + "</div></div> ";}
+	if (item != "versioning") {
+		var optionItem = autoTSettings[item]; 
+  		var text = optionItem.titles[optionItem.enabled]; 
+  		html += "<div class='optionContainer'><div id='toggle" + item + "' class='noselect settingBtn settingBtn" + optionItem.enabled + "' onclick='toggleAutoSetting(\"" + item + "\")'>" + text + "</div><div class='optionItemDescription'>" + optionItem.description + "</div></div> ";
+	}
+}
 autosettings.innerHTML = html;
-
-//setup default settings
-toggleAutoSetting("autobuildings");
-//toggleAutoSetting("autoupgrades");
 
 //create unlearn shieldblock button
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='remove Shieldblock' class='noselect settingBtn btn-warning' onclick='removeShieldblock()'>Unlearn Shieldblock</div><div class='optionItemDescription'>We'll stop teaching the trimps to use shields to block and we'll use them for health again</div></div>");
 autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div id='add Respec' class='noselect settingBtn btn-warning' onclick='addRespec()'>Add a Respec</div><div class='optionItemDescription'>If you've already used your respec but want to do it again anyway, let me know.</div></div>");
 
 //call loop
-var myVar=setInterval(function () {myTimer()}, 10000);
-var newVar=setInterval(function () {newTimer()}, 2000);
+var myVar=setInterval(function () {myTimer()}, 3000);
+var newVar=setInterval(function () {newTimer()}, 1000);
 
 //alert("done");
 
@@ -154,7 +170,7 @@ function updateHealthHighlighting() {
 				document.getElementById(ghealth[gheal]).removeEventListener("click", updateHealthHighlighting);
 			}
 		}
-		var hkeysSorted = Object.keys(hobj).sort(function(a,b){return hobj[a]-hobj[b]});
+		hkeysSorted = Object.keys(hobj).sort(function(a,b){return hobj[a]-hobj[b]});
 		document.getElementById(hkeysSorted[0]).style.border = "1px solid #0000FF";
 		document.getElementById(hkeysSorted[0]).addEventListener('click',updateHealthHighlighting,false);
 	}
@@ -192,7 +208,7 @@ function toggleAutoSetting(setting){
 	if (toggles == 2)	autoOption.enabled = (autoOption.enabled) ? 0 : 1;
 	else {
 		autoOption.enabled++;
-		if (autoOption.enabled >= toggles) menuOption.enabled = 0;
+		if (autoOption.enabled >= toggles) autoOption.enabled = 0;
 	}
 	if (autoOption.onToggle) autoOption.onToggle();
 	var menuElem = document.getElementById("toggle" + setting);
@@ -214,22 +230,26 @@ function myTimer() {
 if (autoTSettings.autobuildings.enabled == 1) {
   if (food > .9) {
     buyBuilding('Barn');
+    tooltip("hide");
     message("Bought us another barn. It's red...hooray.", "Loot", "*eye2", "exotic");
   }
   if (wood > .9) {
     buyBuilding('Shed');
+    tooltip("hide");
     message("Bought us another shed. It's very shed-like", "Loot", "*eye2", "exotic");
   }
   if (metal > .9) {
     buyBuilding('Forge');
+    tooltip("hide");
     message("Bought us another forge. It's a good forge.", "Loot", "*eye2", "exotic")
   }
 }
 
 //Buy tributes
-if (autoTSettings.autotributes.enabled == 1) {
+if (autoTSettings.autogymbutes.enabled == 1 || autoTSettings.autogymbutes.enabled == 3) {
 	if (getBuildingItemPrice(game.buildings.Tribute, "food", false) <= game.resources.food.owned && game.buildings.Tribute.locked == 0) {
 		buyBuilding('Tribute');
+		tooltip("hide");
 		message("Bought us a tribute. The gems must flow!", "Loot", "*eye2", "exotic")
 	}
 }
@@ -280,15 +300,16 @@ if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue')
 
 //Buy gyms
 
-if (autoTSettings.autogyms.enabled == 1) {
+if (autoTSettings.autogymbutes.enabled == 1 || autoTSettings.autogymbutes.enabled == 2) {
 	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned && game.buildings.Gym.locked == 0) {
 		buyBuilding('Gym');
+		tooltip("hide");
 		message("Bought us a gym. Open 24/7.", "Loot", "*eye2", "exotic")
 	}
 }
 
 //Highlight housing
-if (autoTSettings.autohousing.enabled == 1) {
+if (autoTSettings.autohighlight.enabled == 1 || autoTSettings.autohighlight.enabled == 2) {
 	updateHousingHighlighting();
 } else {
 	var ahousing = ["Mansion", "Hotel", "Resort", "Collector", "Warpstation"];
@@ -306,7 +327,7 @@ if (autoTSettings.autohousing.enabled == 1) {
 	}
 }
 
-if (autoTSettings.autoequipment.enabled == 1) {
+if (autoTSettings.autohighlight.enabled == 1 || autoTSettings.autohighlight.enabled == 3) {
 	updateHealthHighlighting();
 	updateAttackHighlighting();
 } else {
@@ -340,7 +361,6 @@ if (autoTSettings.autoequipment.enabled == 1) {
 	}
 }
 
-
 //Buy speed upgrades
 if (autoTSettings.autoupgrades.enabled == 1) {
   autotrimpupgrades = ["Egg", "UberHut", "UberHouse", "UberMansion", "UberHotel", "UberResort", "Bounty", "Efficiency", "TrainTacular", "Gymystic", "Megascience", "Megaminer", "Megalumber", "Megafarming", "Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
@@ -360,7 +380,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 //Buy coordination
 
   if (game.upgrades.Coordination.allowed > game.upgrades.Coordination.done) {
-    if ((game.resources.trimps.realMax() > (game.resources.trimps.maxSoldiers * 3))) {
+    if (canAffordCoordinationTrimps() && canAffordTwoLevel(game.upgrades.Coordination)){
       buyUpgrade('Coordination');
       message("We read Coordination together before bedtime, it was sweet. Now let's go kill something.", "Loot", "*eye2", "exotic")
     }
@@ -370,14 +390,78 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 //Update bones
 document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global.b + ")";
 
+//Update mapbonus
+if (game.global.mapsActive && !game.global.preMapsActive) {
+	var level = getCurrentMapObject().level;
+	document.getElementById("worldNumber").innerHTML = "<br>Lv: " + level + "  (+" + prettify(game.global.mapBonus * 20) + "%)"
+}
+//remove alerts if they exist
+var removebadge = true;
+var badgeupgrades = document.getElementById("upgradesHere");
+for (i = 0; i<badgeupgrades.childNodes.length; i++) { 
+	if (badgeupgrades.childNodes[i].childNodes[0].innerHTML == "!") {
+		removebadge = false;
+	}
+}
+if (removebadge) {
+	document.getElementById("upgradesAlert").innerHTML = "";
+}
+
+//save
+localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
+
+//check for portal/reset
+var loglength = log.childElementCount;
+if (loglength > 4) {loglength = 4;}
+for (j=1; j < loglength; j++) {
+	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf('green shimmer') != -1) {
+		for (item in autoTSettings) {
+			if (item != "versioning") {
+				while (autoTSettings[item].enabled != 0) {
+					toggleAutoSetting(item);
+				}
+			}
+		}
+	}
+}
+
   //clearInterval(myVar);
 }//end loop
 
 function newTimer() {
+
+	var badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .805; //fudge factor
+	var badguyMaxAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * 1.2;
+	if (game.global.mapsActive){
+		badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .805;
+		badguyMaxAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * 1.2;
+	}
+	var mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
+	var mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
+	var blockformation = 1;
+	var healthformation = 1;
+	switch (game.global.formation) {
+		case 1:
+			healthformation = 4;
+			blockformation = .5;
+		break;
+		case 2:
+			healthformation = .5;
+			blockformation = .5;
+		break;
+		case 3:
+			healthformation = .5;
+			blockformation = 4;
+		break;
+	}
+	var myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * mysoldiers * blockformation;
+	var myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
+
+
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
 		if (game.global.mapsActive){
 			if (game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast) {
-				if (game.global.formation == 2) {setFormation(1);}
+				if (game.global.formation == 2 && myblock < badguyMaxAtt) {setFormation(1);}
 			} else {
 				if (game.global.formation == 1) {setFormation(2);}
 			}
@@ -387,6 +471,22 @@ function newTimer() {
 			} else {
 				if (game.global.formation == 1) {setFormation(2);}
 			}
+		}
+	}
+	
+	//avoid snimps
+	if (autoTSettings.autosnimps.enabled == 1) {
+		if (autoTSettings.autohighlight.enabled == 0 || autoTSettings.autohighlight.enabled == 2) {
+			toggleAutoSetting("autohighlight");	
+			toggleAutoSetting("autohighlight");	
+			toggleAutoSetting("autohighlight");	
+		}
+		
+		testblock = myblock;
+		testhealth = myhealth;
+		testattack = badguyMinAtt;
+		if (badguyMinAtt > (myblock + myhealth)) {
+			message("You're stuck on a fastenemy. I would fix this by buying a " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
 }//end new loop
