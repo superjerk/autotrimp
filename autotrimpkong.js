@@ -21,8 +21,8 @@ document.getElementById("helium").style.height = "32.4%";
 document.getElementById("boneFlavorRow").innerHTML = "The Bone Trader trades bones for...bonuses"
 
 //Setup bone number addition
-document.getElementById("boneBtnMain").style = "font-size: 1vw;";
-document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global.b + ")";
+document.getElementById("boneBtn").style = "font-size: 1vw;";
+document.getElementById("boneBtn").innerHTML = "Bone Trader (" + game.global.b + ")";
 
 //setup talk button
 document.getElementById("buildingsQueue").style = "width: 75%; float: left;";
@@ -388,7 +388,7 @@ if (autoTSettings.autoupgrades.enabled == 1) {
 }
 
 //Update bones
-document.getElementById("boneBtnMain").innerHTML = "Bone Trader (" + game.global.b + ")";
+document.getElementById("boneBtn").innerHTML = "Bone Trader (" + game.global.b + ")";
 
 //Update mapbonus
 if (game.global.mapsActive && !game.global.preMapsActive) {
