@@ -93,7 +93,7 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 3000);
-//var newVar=setInterval(function () {newTimer()}, 1000);
+var newVar=setInterval(function () {newTimer()}, 1000);
 
 //alert("done");
 
@@ -395,7 +395,7 @@ localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 //check for portal/reset
 var loglength = log.childElementCount;
 if (loglength > 4) {loglength = 4;}
-for (j=1; j < loglength; j++) {
+for (j=1; j <= loglength; j++) {
 	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf("green shimmer") != -1) {
 		alert("reset");
 		for (item in autoTSettings) {
