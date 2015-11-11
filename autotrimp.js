@@ -10,6 +10,7 @@ var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
 var version = "0.34b";
+var wasgathering = "";
 var testhealth = 0;
 var testblock = 0;
 var testattack = 0;
@@ -67,7 +68,7 @@ else {
 //	var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
 	var autohighlight = {enabled: 0, description: "Highlight the most gem-efficient housing in green and the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting All", "Housing Only", "Equipment Only"]};
 	var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
-	var autoscience = {enabled: 0, description: "I'll send you back to work on science if you've been trying to build on an empty queue for 30 seconds", titles: ["Not Switching", "Switching"]};
+	var autoscience = {enabled: 0, description: "I'll make you switch between gathering and building depending on our build queue", titles: ["Not Switching", "Switching"]};
 	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 	var autosnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
 	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autoscience: autoscience, autosnimps: autosnimps, autoformations: autoformations};
@@ -276,7 +277,7 @@ if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
 }
 
 //check to see if we're building on an empty queue
-if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue').style.display == "block" && game.global.playerGathering == "buildings") {
+/*if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue').style.display == "block" && game.global.playerGathering == "buildings") {
 	switch (buildcounter) {
 		case 0:
 			buildcounter += 1;
@@ -296,7 +297,7 @@ if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue')
 	}
 } else {
 	buildcounter = 0;
-}
+}*/
 
 //Buy gyms
 
@@ -489,4 +490,19 @@ function newTimer() {
 			message("You're stuck on a fastenemy. I would fix this by buying a " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
+	
+	//check to see if we're building on an empty queue, or if we're gathering when there's building to be done
+	if (autoTSettings.autoscience.enabled == 1) {
+		if (game.global.playerGathering != "buildings") {
+			wasgathering = game.global.playerGathering;
+		}
+		if (game.global.buildingsQueue.length > 0 && !game.global.buildingsQueue[0].startsWith("Trap") && game.global.playerGathering != "buildings") {
+			setGather('buildings');
+		} else if (game.global.buildingsQueue.length == 0 && wasgathering != "") {
+			setGather(wasgathering);
+		} else if (game.global.buildingsQueue.length > 0 && game.global.buildingsQueue[0].startsWith("Trap") && game.global.playerGathering == "buildings" && wasgathering != "") {
+			setGather(wasgathering);
+		}
+	}
+	
 }//end new loop
