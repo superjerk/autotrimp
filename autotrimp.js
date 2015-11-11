@@ -415,7 +415,7 @@ function newTimer() {
 		badguyMaxAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * 1.2;
 	}
 	mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
-	mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
+/*	mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
 	blockformation = 1;
 	healthformation = 1;
 	switch (game.global.formation) {
@@ -431,10 +431,11 @@ function newTimer() {
 			healthformation = .5;
 			blockformation = 4;
 		break;
-	}
-	myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * mysoldiers * blockformation;
-	myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
-
+	}*/
+	//myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * mysoldiers * blockformation;
+	myblock = game.global.soldierCurrentBlock;
+	//myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
+	myhealth = game.global.soldierHealthMax;
 
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
 		if (game.global.mapsActive){
