@@ -269,6 +269,9 @@ if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
 			premapscounter += 1;
 			break;
 		case 3:
+			premapscounter += 1;
+			break;
+		case 4:
 			premapscounter = 0;
 			mapsClicked();
 			break;
@@ -393,7 +396,8 @@ localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 var loglength = log.childElementCount;
 if (loglength > 4) {loglength = 4;}
 for (j=1; j < loglength; j++) {
-	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf('green shimmer') != -1) {
+	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf("green shimmer") != -1) {
+		alert("reset");
 		for (item in autoTSettings) {
 			if (item != "versioning") {
 				while (autoTSettings[item].enabled != 0) {
