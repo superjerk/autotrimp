@@ -1,7 +1,4 @@
-//Old load notifications
-//document.getElementById("food").appendChild(document.createTextNode("*"));
-
-//globals-why weren't they here earlier?
+//globals
 var gobj = {};
 var hobj = {};
 var aobj = {};
@@ -9,7 +6,7 @@ var hkeysSorted = [];
 var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
-var version = "0.34b";
+var version = "0.35b";
 var wasgathering = "";
 var testhealth = 0;
 var testblock = 0;
@@ -48,7 +45,7 @@ conversation[6] = {Q:"Keep going. Maybe we'll find some answers. Since we're fri
 conversation[7] = {Q:"I can tell the trimps to build storage buildings before they get full. I can also buy Gyms and Tributes as soon as we can afford them, and read some upgrade books to you and the trimps when you're not available.",R1:"Which upgrade books?",L1:8, R2:"What else?", L2:9};
 conversation[8] = {Q:"The upgrades I can read are: Speedfarming, Speedlumber, Speedminer, Speedscience, (all the Mega versions too), Efficiency, TrainTacular, Gymystic, Potency, Egg, UberHut, UberHouse, UberMansion, UberHotel, UberResort, and Bounty",R1:"Ok, cool",L1:9};
 conversation[9] = {Q:"I can also highlight the housing that makes the most use of our gems, and the equipment that makes the best use of our metal.",R1:"Cool, what else?",L1:10};
-conversation[10] = {Q:"I'll bring us back to the world if we idle on the premap screen too long and I'll send you back to science-ing if you stay building on an empty queue. I can also <b>unteach</b> Shieldblock.",R1:"Why unteach Shieldblock?",L1:11, R2:"Anything else?",L2:12};
+conversation[10] = {Q:"I'll bring us back to the world if we idle on the premap screen too long and I'll switch you between gathering and building depending on our build queue. I can also <b>unteach</b> Shieldblock.",R1:"Why unteach Shieldblock?",L1:11, R2:"Anything else?",L2:12};
 conversation[11] = {Q:"As we learn more and more Gymystic, our shields becomes less and less useful for blocking. The extra health comes in real handy post z60.",R1:"I get it.",L1:12};
 conversation[12] = {Q:"I can help you respec the portal perks if you've already done it this round, and I can automatically flip between Dominance and Heap formations depending on the enemy we're facing.",R1:"Ok.",L1:13};
 conversation[13] = {Q:"That's it for now, but I'll let you know if I pick up any more tricks. Use the buttons below to let me know what you'd like done.",R1:"Ok.",L1:2};
@@ -64,14 +61,12 @@ else {
 	var autobuildings = {enabled: 0, description: "Automatically buy storage buildings when they're 90% full", titles: ["Not Buying", "Buying"]};
 	var autogymbutes = {enabled: 0, description: "Automatically buy gyms and tributes when we can afford them", titles: ["Not Buying", "Buying Both", "Gyms Only", "Tributes Only"]};
 	var autoupgrades = {enabled: 0, description: "Automatically read certain upgrade books to you and the trimps", titles: ["Not Reading", "Reading"]};
-//	var autohousing = {enabled: 0, description: "Highlight the most gem-efficient housing in green", titles: ["Not Highlighting", "Highlighting"]};
-//	var autoequipment = {enabled: 0, description: "Highlight the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting"]};
 	var autohighlight = {enabled: 0, description: "Highlight the most gem-efficient housing in green and the most metal-efficient equipment in blue and red", titles: ["Not Highlighting", "Highlighting All", "Housing Only", "Equipment Only"]};
 	var autopremaps = {enabled: 0, description: "Bring us back to the world if we're in the premaps screen for 30 seconds", titles: ["Not Switching", "Switching"]};
-	var autoscience = {enabled: 0, description: "I'll make you switch between gathering and building depending on our build queue", titles: ["Not Switching", "Switching"]};
+	var autogather = {enabled: 0, description: "I'll make you switch between gathering and building depending on our build queue", titles: ["Not Switching", "Switching"]};
 	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 	var autosnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
-	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autoscience: autoscience, autosnimps: autosnimps, autoformations: autoformations};
+	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autogather: autogather, autosnimps: autosnimps, autoformations: autoformations};
 }
 
 //add buttonss
@@ -152,7 +147,7 @@ function updateHousingHighlighting() {
 }
 
 function updateHealthHighlighting() {
-	var ahealth = ["Boots", "Helmet", "Pants", "Shoulderguards", "Breastplate"];
+	var ahealth = ["Boots", "Helmet", "Pants", "Shoulderguards", "Breastplate", "Gambeson"];
 	var ghealth = [];
 	for (aheal in ahealth) {
 		if (game.equipment[ahealth[aheal]].locked == 0) {
@@ -178,7 +173,7 @@ function updateHealthHighlighting() {
 }
 
 function updateAttackHighlighting() {
-	var aAttacking = ["Dagger", "Mace", "Polearm", "Battleaxe", "Greatsword"];
+	var aAttacking = ["Dagger", "Mace", "Polearm", "Battleaxe", "Greatsword", "Arbalest"];
 	var gAttacking = [];
 	for (aAttack in aAttacking) {
 		if (game.equipment[aAttacking[aAttack]].locked == 0) {
@@ -275,29 +270,6 @@ if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
 } else {
 	premapscounter = 0;
 }
-
-//check to see if we're building on an empty queue
-/*if (autoTSettings.autoscience.enabled == 1 && document.getElementById('noQueue').style.display == "block" && game.global.playerGathering == "buildings") {
-	switch (buildcounter) {
-		case 0:
-			buildcounter += 1;
-			break;
-		case 1:
-			buildcounter += 1;
-			break;
-		case 2:
-			buildcounter += 1;
-			break;
-		case 3:
-			buildcounter = 0;
-			if (game.global.challengeActive != 'Scientist') {
-				setGather('science');
-			}
-			break;
-	}
-} else {
-	buildcounter = 0;
-}*/
 
 //Buy gyms
 
@@ -492,7 +464,7 @@ function newTimer() {
 	}
 	
 	//check to see if we're building on an empty queue, or if we're gathering when there's building to be done
-	if (autoTSettings.autoscience.enabled == 1) {
+	if (autoTSettings.autogather.enabled == 1) {
 		if (game.global.playerGathering != "buildings") {
 			wasgathering = game.global.playerGathering;
 		}
