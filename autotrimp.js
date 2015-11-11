@@ -6,7 +6,7 @@ var hkeysSorted = [];
 var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
-var version = "0.36b";
+var version = "0.37b";
 var wasgathering = "";
 var badguyMinAtt = 0;
 var badguyMaxAtt = 0;
@@ -19,8 +19,6 @@ var myblock = 0;
 var myhealth = 0;
 
 //Line things up, OCD FTW!
-//fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
-//fixed !!document.getElementById("rightCol").style.paddingLeft = ".3%";
 document.getElementById("helium").style.height = "32.4%";
 document.getElementById("boneFlavorRow").innerHTML = "The Bone Trader trades bones for...bonuses"
 
@@ -72,7 +70,8 @@ else {
 	var autogather = {enabled: 0, description: "I'll make you switch between gathering and building depending on our build queue", titles: ["Not Switching", "Switching"]};
 	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 	var autosnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
-	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autogather: autogather, autosnimps: autosnimps, autoformations: autoformations};
+	var automapbmax = {enabled: 0, description: "I'll manage turning map repeat on and off so we can reach the max map bonus", titles: ["Not Managing", "Managing"]};
+	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autogather: autogather, automaxbmap: automaxbmap, autosnimps: autosnimps, autoformations: autoformations};
 }
 
 //add buttonss
@@ -280,8 +279,27 @@ if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
 	premapscounter = 0;
 }
 
-//Buy gyms
+//Manage Map Repeat
+if (autoTSettings.automapbmax.enabled == 1 && game.global.mapsActive && !game.global.preMapsActive) {
+	if (game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].noRecycle) {
+		if (game.global.repeatMap) {
+			repeatClicked();
+		}
+	}else {
+		if (game.global.mapBonus == 9 && game.global.repeatMap) {
+			repeatClicked();
+		} else if (game.global.mapBonus != 9 && !game.global.repeatMap) {
+			repeatClicked();
+		}
+	}
+	if (!document.getElementById("repeatBtn").innerHTML.endsWith("*")) {
+		document.getElementById("repeatBtn").appendChild(document.createTextNode("*"))
+	}
+} else if (autoTSettings.automapbmax.enabled == 0 && game.global.mapsActive && !game.global.preMapsActive) {
+	document.getElementById("repeatBtn").innerHTML = (game.global.repeatMap) ? "Repeat On" : "Repeat Off";
+}
 
+//Buy gyms
 if (autoTSettings.autogymbutes.enabled == 1 || autoTSettings.autogymbutes.enabled == 2) {
 	if (getBuildingItemPrice(game.buildings.Gym, "wood", false) <= game.resources.wood.owned && game.buildings.Gym.locked == 0) {
 		buyBuilding('Gym');
@@ -412,11 +430,11 @@ function newTimer() {
 		document.getElementById("talkBtn").style.display = "block";
 	}
 	badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .805; //fudge factor
-	badguyMaxAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * 1.2;
+	badguyMaxAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * 1.19;
 	badguyFast = game.badGuys[game.global.gridArray[game.global.lastClearedCell + 1].name].fast;
-	if (game.global.mapsActive){
+	if (game.global.mapsActive && !game.global.preMapsActive){
 		badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .805;
-		badguyMaxAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * 1.2;
+		badguyMaxAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * 1.19;
 		badguyFast = game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast;
 	}
 	mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
@@ -443,7 +461,7 @@ function newTimer() {
 	myhealth = game.global.soldierHealthMax;
 
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
-		if (game.global.mapsActive){
+		if (game.global.mapsActive && !game.global.preMapsActive){
 			if (game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast) {
 				if (game.global.formation == 2 && myblock < badguyMaxAtt) {setFormation(1);}
 			} else {
@@ -466,7 +484,7 @@ function newTimer() {
 			toggleAutoSetting("autohighlight");	
 		}
 		
-		if (badguyFast && badguyMinAtt > (myblock + myhealth)) {
+		if (badguyFast && badguyMinAtt > (myblock + myhealth) && game.global.formation != 2) {
 			message("You're stuck on a fastenemy. I would fix this by buying a " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
