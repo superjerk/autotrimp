@@ -485,7 +485,8 @@ function newTimer() {
 		}
 		
 		if (badguyFast && badguyMinAtt > (myblock + myhealth) && game.global.formation != 2) {
-			message("You're stuck on a fastenemy. I would fix this by buying a " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
+			console.log(game.global.formation)
+			message("You're stuck on a fastenemy. I would fix this by buying a level of " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
 	
