@@ -414,7 +414,7 @@ function newTimer() {
 	if (game.global.mapsActive){
 		badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .805;
 		badguyMaxAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * 1.2;
-		badguyFast = game.badGuys[game.global.mapGridArray[game.global.lastMapClearedCell + 1].name].fast;
+		badguyFast = game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast;
 	}
 	mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
 /*	mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
