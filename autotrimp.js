@@ -393,19 +393,21 @@ if (removebadge) {
 localStorage.setItem("autotrimpsave",JSON.stringify(autoTSettings));
 
 //check for portal/reset
-var loglength = log.childElementCount;
+/*var loglength = log.childElementCount;
 if (loglength > 4) {loglength = 4;}
 for (j=1; j <= loglength; j++) {
-	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf("green shimmer") != -1) {
-		for (item in autoTSettings) {
-			if (item != "versioning") {
-				while (autoTSettings[item].enabled != 0) {
-					toggleAutoSetting(item);
+	if ((log.childNodes[log.childElementCount-j].innerHTML).lastIndexOf("green shimmer") != -1) {*/
+		if (game.global.gridArray.length == 0) {
+			alert("reset");
+			for (item in autoTSettings) {
+				if (item != "versioning") {
+					while (autoTSettings[item].enabled != 0) {
+						toggleAutoSetting(item);
+					}
 				}
 			}
 		}
-	}
-}
+//}
 
   //clearInterval(myVar);
 }//end loop
