@@ -484,7 +484,9 @@ function newTimer() {
 			toggleAutoSetting("autohighlight");	
 		}
 		
-		if (badguyFast && badguyMinAtt > (myblock + myhealth) && game.global.formation != 2) {
+		myblock = game.global.soldierCurrentBlock;
+		myhealth = game.global.soldierHealthMax;
+		if (badguyFast && badguyMinAtt > (myblock + myhealth)) {
 			console.log(game.global.formation)
 			message("You're stuck on a fastenemy. I would fix this by buying a level of " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
