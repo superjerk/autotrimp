@@ -93,7 +93,7 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 3000);
-var newVar=setInterval(function () {newTimer()}, 1000);
+//var newVar=setInterval(function () {newTimer()}, 1000);
 
 //alert("done");
 
