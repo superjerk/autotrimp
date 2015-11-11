@@ -460,6 +460,19 @@ function newTimer() {
 	//myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
 	myhealth = game.global.soldierHealthMax;
 
+	//avoid snimps
+	if (autoTSettings.autosnimps.enabled == 1) {
+		if (autoTSettings.autohighlight.enabled == 0 || autoTSettings.autohighlight.enabled == 2) {
+			toggleAutoSetting("autohighlight");	
+			toggleAutoSetting("autohighlight");	
+			toggleAutoSetting("autohighlight");	
+		}
+		if (badguyFast && badguyMinAtt > (myblock + myhealth) && game.global.formation != 2) {
+			console.log(game.global.formation)
+			message("You're stuck on a fastenemy. I would fix this by buying a level of " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
+		}
+	}
+
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
 		if (game.global.mapsActive && !game.global.preMapsActive){
 			if (game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast) {
@@ -473,22 +486,6 @@ function newTimer() {
 			} else {
 				if (game.global.formation == 1) {setFormation(2);}
 			}
-		}
-	}
-	
-	//avoid snimps
-	if (autoTSettings.autosnimps.enabled == 1) {
-		if (autoTSettings.autohighlight.enabled == 0 || autoTSettings.autohighlight.enabled == 2) {
-			toggleAutoSetting("autohighlight");	
-			toggleAutoSetting("autohighlight");	
-			toggleAutoSetting("autohighlight");	
-		}
-		
-		myblock = game.global.soldierCurrentBlock;
-		myhealth = game.global.soldierHealthMax;
-		if (badguyFast && badguyMinAtt > (myblock + myhealth)) {
-			console.log(game.global.formation)
-			message("You're stuck on a fastenemy. I would fix this by buying a level of " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
 	
