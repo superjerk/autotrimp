@@ -461,7 +461,7 @@ function newTimer() {
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
 		if (game.global.mapsActive){
 			if (game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast) {
-				if (game.global.formation == 2 && myblock < badguyMaxAtt) {setFormation(1);}
+				if (game.global.formation == 2) {setFormation(1);}
 			} else {
 				if (game.global.formation == 1) {setFormation(2);}
 			}
