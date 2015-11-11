@@ -8,9 +8,15 @@ var buildcounter = 0;
 var autoTSettings = {};
 var version = "0.36b";
 var wasgathering = "";
-var testhealth = 0;
-var testblock = 0;
-var testattack = 0;
+
+var badguyMinAtt = 0;
+var badguyMaxAtt = 0;
+var mysoldiers = 0;
+var mytoughness = 0;
+var blockformation = 1;
+var healthformation = 1;
+var myblock = 0;
+var myhealth = 0;
 
 //Line things up, OCD FTW!
 //fixed !! document.getElementById("buyCol").style.paddingRight = ".3%";
@@ -402,17 +408,16 @@ for (j=1; j < loglength; j++) {
 }//end loop
 
 function newTimer() {
-
-	var badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .805; //fudge factor
-	var badguyMaxAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * 1.2;
+	badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .805; //fudge factor
+	badguyMaxAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * 1.2;
 	if (game.global.mapsActive){
 		badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .805;
 		badguyMaxAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * 1.2;
 	}
-	var mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
-	var mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
-	var blockformation = 1;
-	var healthformation = 1;
+	mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
+	mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
+	blockformation = 1;
+	healthformation = 1;
 	switch (game.global.formation) {
 		case 1:
 			healthformation = 4;
@@ -427,14 +432,14 @@ function newTimer() {
 			blockformation = 4;
 		break;
 	}
-	var myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * mysoldiers * blockformation;
-	var myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
+	myblock = game.global.block * game.jobs.Trainer.owned * game.jobs.Trainer.modifier * mysoldiers * blockformation;
+	myhealth = game.global.health * mysoldiers * mytoughness * healthformation;
 
 
 	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
 		if (game.global.mapsActive){
 			if (game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast) {
-				if (game.global.formation == 2) {setFormation(1);}
+				if (game.global.formation == 2 && myblock < badguyMaxAtt) {setFormation(1);}
 			} else {
 				if (game.global.formation == 1) {setFormation(2);}
 			}
@@ -455,9 +460,6 @@ function newTimer() {
 			toggleAutoSetting("autohighlight");	
 		}
 		
-		testblock = myblock;
-		testhealth = myhealth;
-		testattack = badguyMinAtt;
 		if (badguyMinAtt > (myblock + myhealth)) {
 			message("You're stuck on a fastenemy. I would fix this by buying a " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
