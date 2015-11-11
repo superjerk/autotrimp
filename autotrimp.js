@@ -8,9 +8,9 @@ var buildcounter = 0;
 var autoTSettings = {};
 var version = "0.36b";
 var wasgathering = "";
-
 var badguyMinAtt = 0;
 var badguyMaxAtt = 0;
+var badguyFast = false;
 var mysoldiers = 0;
 var mytoughness = 0;
 var blockformation = 1;
@@ -410,9 +410,11 @@ for (j=1; j < loglength; j++) {
 function newTimer() {
 	badguyMinAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * .805; //fudge factor
 	badguyMaxAtt = game.global.gridArray[game.global.lastClearedCell + 1].attack * 1.2;
+	badguyFast = game.badGuys[game.global.gridArray[game.global.lastClearedCell + 1].name].fast;
 	if (game.global.mapsActive){
 		badguyMinAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * .805;
 		badguyMaxAtt = game.global.mapGridArray[game.global.lastClearedMapCell + 1].attack * 1.2;
+		badguyFast = game.badGuys[game.global.mapgridArray[game.global.lastMapClearedCell + 1].name].fast;
 	}
 	mysoldiers = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers ;
 /*	mytoughness = (game.portal.Toughness.level * game.portal.Toughness.modifier * 100) + 100;
@@ -461,7 +463,7 @@ function newTimer() {
 			toggleAutoSetting("autohighlight");	
 		}
 		
-		if (badguyMinAtt > (myblock + myhealth)) {
+		if (badguyFast && badguyMinAtt > (myblock + myhealth)) {
 			message("You're stuck on a fastenemy. I would fix this by buying a " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
 		}
 	}
