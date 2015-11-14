@@ -6,7 +6,7 @@ var hkeysSorted = [];
 var premapscounter = 0;
 var buildcounter = 0;
 var autoTSettings = {};
-var version = "0.37b";
+var version = "0.37c";
 var wasgathering = "";
 var badguyMinAtt = 0;
 var badguyMaxAtt = 0;
@@ -17,6 +17,7 @@ var blockformation = 1;
 var healthformation = 1;
 var myblock = 0;
 var myhealth = 0;
+var jobbuffer = 10;
 
 //Line things up, OCD FTW!
 document.getElementById("helium").style.height = "32.4%";
@@ -71,7 +72,8 @@ else {
 	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 	var autosnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
 	var automapbmax = {enabled: 0, description: "I'll manage turning map repeat on and off so we can reach the max map bonus", titles: ["Not Managing", "Managing"]};
-	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autogather: autogather, automapbmax: automapbmax, autosnimps: autosnimps, autoformations: autoformations};
+	var autojobs = {enabled: 0, description: "Will manage hiring of workers", titles: ["Idle", "Hiring"]};
+  autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autogather: autogather, automapbmax: automapbmax, autosnimps: autosnimps, autoformations: autoformations, autojobs: autojobs};
 }
 
 //add buttonss
@@ -93,6 +95,7 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 3000);
 var newVar=setInterval(function () {newTimer()}, 1000);
+var anoVar=setInterval(function () {jobTimer()}, 1000);
 
 //alert("done");
 
@@ -425,6 +428,55 @@ if (game.global.gridArray.length == 0) {
   //clearInterval(myVar);
 }//end loop
 
+function jobTimer() {
+  var maxworkers=Math.ceil(game.resources.trimps.realMax() / 2);
+  var freeworkers=maxworkers-game.resources.trimps.employed;
+  var mainjobs = ["Miner", "Farmer", "Lumberjack", "Trainer", "Explorer", "Scientist", "Geneticist"];
+  for (var id=0, tot=mainjobs.length; id < tot; id++) {
+    var job=mainjobs[id]
+    if (!game.jobs[job].locked && autoTSettings.autojobs.enabled == 1) {
+      if (id <= 2) {
+        var Target=Math.floor((freeworkers-jobbuffer)/3);
+        if (Target>0){
+          BuyJobs(job, Target);
+        }  
+      }
+      else if (id == 3||4) {
+        Ratio=game.buildings.Gym.owned/game.jobs[job].owned;
+        if (Ratio > 0.6) {
+          if (freeworkers >= 10) {
+            BuyJobs(job, 1);
+          }
+        }
+      }
+      else if (id == 5) {
+        if (game.jobs.Scientist.owned < 100) {
+          missing=100-game.jobs.Scientist.owned;
+          BuyJobs(job, missing);
+        }
+      }
+      else if (id == 6) {
+        if (game.global.challengeActive.localeCompare("Electricity") == 0) {
+          return true;
+        }
+        gmiss=game.jobs.Geneticist.owned-game.buildings.Nursery.owned/3
+        if (gmiss != 0) {
+          BuyJobs(job, 1);
+        }
+      }
+      else {
+        return true;
+      }
+    }
+  }
+}
+function BuyJobs(job, amount) {
+  var curamt=game.global.buyAmt;
+  game.global.buyAmt=amount;
+  buyJob(job);
+  tooltip("hide");
+  game.global.buyAmt=curamt;
+}
 function newTimer() {
 	if (game.global.gridArray.length != 0) {
 		document.getElementById("talkBtn").style.display = "block";
