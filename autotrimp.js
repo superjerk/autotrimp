@@ -460,7 +460,7 @@ function jobTimer() {
           return true;
         }
         gmiss=game.jobs.Geneticist.owned-game.buildings.Nursery.owned/3
-        if (gmiss != 0) {
+        if (gmiss <= 0) {
           BuyJobs(job, 1);
         }
       }
