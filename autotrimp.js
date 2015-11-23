@@ -54,7 +54,7 @@ updateConvo(0);
 //setup options
 var checking = JSON.parse(localStorage.getItem("autotrimpsave"))
 if (checking != null && checking.versioning == version) {
-	autoTSettings = checking;	
+	autoTSettings = checking;
 }
 else {
 	var versioning = {version: version};
@@ -66,7 +66,7 @@ else {
 	var autogather = {enabled: 0, description: "I'll make you switch between gathering and building depending on our build queue", titles: ["Not Switching", "Switching"]};
 	var autoformations = {enabled: 0, description: "Automatically switch between Heap and Dominance formations based on enemy", titles: ["Not Switching", "Switching"]};
 	var autosnimps = {enabled: 0, description: "I'll automatically buy items to help us get past snimps, squimps, and other fast enemies", titles: ["Not Avoiding", "Avoiding"]};
-	var automapbmax = {enabled: 0, description: "I'll manage turning map repeat on and off so we can reach the max map bonus", titles: ["Not Managing", "Managing"]};
+	var automapbmax = {enabled: 0, description: "I'll manage turning map repeat on and off so we can reach the max map bonus", titles: ["Not Maxing", "Manually Maxing", "Always Maxing"]};
 	autoTSettings = {versioning: version, autobuildings: autobuildings, autogymbutes: autogymbutes, autoupgrades: autoupgrades, autohighlight: autohighlight, autopremaps: autopremaps, autogather: autogather, automapbmax: automapbmax, autosnimps: autosnimps, autoformations: autoformations};
 }
 
@@ -75,8 +75,8 @@ var autosettings = document.getElementById("autosettings0");
 var html = "";
 for (var item in autoTSettings) {
 	if (item != "versioning") {
-		var optionItem = autoTSettings[item]; 
-  		var text = optionItem.titles[optionItem.enabled]; 
+		var optionItem = autoTSettings[item];
+  		var text = optionItem.titles[optionItem.enabled];
   		html += "<div class='optionContainer'><div id='toggle" + item + "' class='noselect settingBtn settingBtn" + optionItem.enabled + "' onclick='toggleAutoSetting(\"" + item + "\")'>" + text + "</div><div class='optionItemDescription'>" + optionItem.description + "</div></div> ";
 	}
 }
@@ -111,7 +111,7 @@ function removeShieldblock() {
 		game.equipment.Shield.blockNow = false;
 		game.equipment.Shield.tooltip = "A big, wooden shield. Adds $healthCalculated$ health to each soldier per level.";
 		levelEquipment("Shield", 1);
-		game.upgrades.Shieldblock.done = 0;	
+		game.upgrades.Shieldblock.done = 0;
 	}
 }
 
@@ -276,7 +276,7 @@ if (autoTSettings.autopremaps.enabled == 1 && game.global.preMapsActive) {
 }
 
 //Manage Map Repeat
-if (autoTSettings.automapbmax.enabled == 1 && game.global.mapsActive && !game.global.preMapsActive) {
+if (autoTSettings.automapbmax.enabled && game.global.mapsActive && !game.global.preMapsActive) {
 	if (game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].noRecycle) {
 		if (game.global.repeatMap) {
 			repeatClicked();
@@ -284,7 +284,7 @@ if (autoTSettings.automapbmax.enabled == 1 && game.global.mapsActive && !game.gl
 	}else {
 		if (game.global.mapBonus == 9 && game.global.repeatMap) {
 			repeatClicked();
-		} else if (game.global.mapBonus != 9 && !game.global.repeatMap) {
+		} else if (game.global.mapBonus != 9 && !game.global.repeatMap && autoTSettings.automapbmax.enabled == 2) {
 			repeatClicked();
 		}
 	}
@@ -361,7 +361,7 @@ if (autoTSettings.autohighlight.enabled == 1 || autoTSettings.autohighlight.enab
 if (autoTSettings.autoupgrades.enabled == 1) {
   autotrimpupgrades = ["Egg", "UberHut", "UberHouse", "UberMansion", "UberHotel", "UberResort", "Bounty", "Efficiency", "TrainTacular", "Gymystic", "Megascience", "Megaminer", "Megalumber", "Megafarming", "Speedfarming", "Speedlumber", "Speedminer", "Speedscience", "Potency"]
   for (var key in game.upgrades) {
-    if (autotrimpupgrades.indexOf(key) != -1) { 
+    if (autotrimpupgrades.indexOf(key) != -1) {
       if (game.upgrades[key].allowed > game.upgrades[key].done && canAffordTwoLevel(game.upgrades[key])) {
       	buyUpgrade(key);
         if (key == "Efficiency") {
@@ -394,7 +394,7 @@ if (game.global.mapsActive && !game.global.preMapsActive) {
 //remove alerts if they exist
 var removebadge = true;
 var badgeupgrades = document.getElementById("upgradesHere");
-for (i = 0; i<badgeupgrades.childNodes.length; i++) { 
+for (i = 0; i<badgeupgrades.childNodes.length; i++) {
 	if (badgeupgrades.childNodes[i].childNodes[0].innerHTML == "!") {
 		removebadge = false;
 	}
@@ -459,13 +459,13 @@ function newTimer() {
 	//avoid snimps
 	if (autoTSettings.autosnimps.enabled == 1) {
 		if (autoTSettings.autohighlight.enabled == 0 || autoTSettings.autohighlight.enabled == 2) {
-			toggleAutoSetting("autohighlight");	
-			toggleAutoSetting("autohighlight");	
-			toggleAutoSetting("autohighlight");	
+			toggleAutoSetting("autohighlight");
+			toggleAutoSetting("autohighlight");
+			toggleAutoSetting("autohighlight");
 		}
 		if (badguyFast && badguyMinAtt > (myblock + myhealth) && game.global.formation != 2) {
 			console.log(game.global.formation)
-			message("You're stuck on a fastenemy. I would fix this by buying a level of " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")	
+			message("You're stuck on a fastenemy. I would fix this by buying a level of " + hkeysSorted[0] + ".", "Loot", "*eye2", "exotic")
 		}
 	}
 
@@ -484,7 +484,7 @@ function newTimer() {
 			}
 		}
 	}
-	
+
 	//check to see if we're building on an empty queue, or if we're gathering when there's building to be done
 	if (autoTSettings.autogather.enabled == 1) {
 		if (game.global.playerGathering != "buildings") {
@@ -498,5 +498,5 @@ function newTimer() {
 			setGather(wasgathering);
 		}
 	}
-	
+
 }//end new loop
