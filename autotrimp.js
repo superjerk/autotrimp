@@ -88,7 +88,13 @@ autosettings.insertAdjacentHTML('beforeend', "<div class='optionContainer'><div 
 
 //call loop
 var myVar=setInterval(function () {myTimer()}, 3000);
-var newVar=setInterval(function () {newTimer()}, 1000);
+// account for agility level in setting newTimer's interval (since newTimer is
+// responsible for formations)
+// set the interval to be 1 level higher than agility to make it more likely
+// formations are checked before every fight tick
+var agilityLevel = game.portal.Agility.level ? game.portal.Agility.level : 1;
+var fightInterval = 1000 * Math.pow(1 - game.portal.Agility.modifier, agilityLevel);
+var newVar=setInterval(function () {newTimer()}, fightInterval);
 
 //alert("done");
 
@@ -469,22 +475,88 @@ function newTimer() {
 		}
 	}
 
-	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Dominance.done == 1)	{
-		if (game.global.mapsActive && !game.global.preMapsActive){
-			if (game.badGuys[game.global.mapGridArray[game.global.lastClearedMapCell + 1].name].fast) {
-				if (game.global.formation == 2 && myblock < badguyMaxAtt) {setFormation(1);}
-			} else {
-				if (game.global.formation == 1) {setFormation(2);}
-			}
+	if (autoTSettings.autoformations.enabled == 1 && game.upgrades.Formations.done == 1) {
+		var percentHealthRemaining = game.global.soldierHealth / game.global.soldierHealthMax;
+		var aboutToDie, isEnemyFast, reason;
+		if (percentHealthRemaining == 0) {
+			// do nothing if dead
 		} else {
-			if (game.badGuys[game.global.gridArray[game.global.lastClearedCell + 1].name].fast) {
-				if (game.global.formation == 2) {setFormation(1);}
+			var breeding = game.resources.trimps.owned != game.resources.trimps.realMax();
+
+			// If dominance is unlocked, use that formation as the default,
+			// otherwise use "no formation"
+			// "no formation" is "0" instead of 0
+			var formationToUse = game.upgrades.Dominance.done == 1 ? 2 : "0";
+
+			// If we're in heap and the next batch of trimps isn't ready, and
+			// the next attack would kill us if we switched out of heap
+			// (or switching out of heap would kill us from health loss)
+			// do nothing so we don't instakill our trimps and stall out
+			var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
+			var healthWithoutHeap = game.global.soldierHealthMax / 8;
+			if (breeding && game.global.formation == 1 && (healthWithoutHeap - missingHealth < badguyMaxAtt * 1.2)) {
+				// do nothing
+			} else if (game.global.mapsActive && !game.global.preMapsActive) {
+				aboutToDie = breeding && game.global.soldierHealth < badguyMaxAtt;
+
+				if (aboutToDie && breeding) {
+					// In a map, use barrier if it would help, otherwise use heap like normal
+					if (game.global.formation == 0) {
+						// If no formation, multiply block by 4
+						blockToCheck = myblock * 4;
+					} else {
+						// If in heap, multiply block by 8
+						blockToCheck = myblock * 8;
+					}
+					if (blockToCheck > badguyMaxAtt && game.upgrades.Barrier.done) {
+						if (game.global.formation != 3) {
+							console.log("about to die, switching to barrier in map");
+							setFormation(3);
+						}
+					}
+					else {
+						if (game.global.formation != 1) {
+							console.log("about to die, switching to heap in map");
+							setFormation(1);
+						}
+					}
+				} else {
+					if (game.global.formation != formationToUse) {
+						console.log("not breeding, switching to dominance in map");
+						setFormation(formationToUse);
+					}
+				}
 			} else {
-				if (game.global.formation == 1) {setFormation(2);}
+				// multiply max attack by 1.2 to and account for post-60 pierce
+				aboutToDie = breeding && game.global.soldierHealth < badguyMaxAtt * 1.2;
+				isEnemyFast = game.badGuys[game.global.gridArray[game.global.lastClearedCell + 1].name].fast;
+				if (aboutToDie || isEnemyFast) {
+					if (aboutToDie) {
+						reason = "about to die";
+					} else if (isEnemyFast) {
+						reason = "fast enemy";
+					}
+					if (breeding || isEnemyFast) {
+						if (game.global.formation != 1) {
+							console.log(reason + ", switching to heap in world ");
+							setFormation(1);
+						}
+					} else {
+						if (game.global.formation != formationToUse) {
+							console.log("no longer breeding, switching to dominance in map");
+							setFormation(formationToUse);
+						}
+					}
+				} else {
+					if (game.global.formation != formationToUse) {
+						console.log("slow enemy, switching to dominance in world");
+						setFormation(formationToUse);
+					}
+				}
 			}
 		}
 	}
-	
+
 	//check to see if we're building on an empty queue, or if we're gathering when there's building to be done
 	if (autoTSettings.autogather.enabled == 1) {
 		if (game.global.playerGathering != "buildings") {
