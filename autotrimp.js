@@ -133,7 +133,10 @@ function updateHousingHighlighting() {
 		for (ghouse in ghousing) {
 			var gbuilding = game.buildings[ghousing[ghouse]];
 			var gcost = 0;
-			gcost += getBuildingItemPrice(gbuilding, "gems");
+			gcost += getBuildingItemPrice(gbuilding, "gems", 0, game.global.buyAmt);
+			if (gcost === Infinity) {
+				return;
+			}
 			var gratio = gcost / gbuilding.increase.by;
 			gobj[ghousing[ghouse]] = gratio;
 			if (document.getElementById(ghousing[ghouse]).style.border = "1px solid #00CC00") {
