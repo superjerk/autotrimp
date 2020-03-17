@@ -159,7 +159,7 @@ function updateHealthHighlighting() {
 		for (gheal in ghealth) {
 			var hequip = game.equipment[ghealth[gheal]];
 			var mcost = 0;
-			mcost += getBuildingItemPrice(hequip, "metal", true);
+			mcost += getBuildingItemPrice(hequip, "metal", true, 1);
 			var mratio = mcost / hequip.healthCalculated;
 			hobj[ghealth[gheal]] = mratio;
 			if (document.getElementById(ghealth[gheal]).style.border = "1px solid #0000FF") {
@@ -185,7 +185,7 @@ function updateAttackHighlighting() {
 		for (gAttack in gAttacking) {
 			var aequip = game.equipment[gAttacking[gAttack]];
 			var mcost = 0;
-			mcost += getBuildingItemPrice(aequip, "metal", true);
+			mcost += getBuildingItemPrice(aequip, "metal", true, 1);
 			var mratio = mcost / aequip.attackCalculated;
 			aobj[gAttacking[gAttack]] = mratio;
 			if (document.getElementById(gAttacking[gAttack]).style.border = "1px solid #FF0000") {
